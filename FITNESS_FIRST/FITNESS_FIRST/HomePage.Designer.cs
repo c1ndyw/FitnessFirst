@@ -1,4 +1,4 @@
-﻿namespace WindowsFormsApplication1
+﻿namespace FitnessFirst
 {
     partial class HomePage
     {
@@ -28,10 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(HomePage));
             this.sportContainer = new System.Windows.Forms.Panel();
             this.startBtn = new System.Windows.Forms.PictureBox();
-            this.courseTableAdapter1 = new WindowsFormsApplication1.FitnessfirstDataSetTableAdapters.CourseTableAdapter();
+            this.courseTableAdapter1 = new FitnessFirst.FitnessfirstDataSetTableAdapters.CourseTableAdapter();
             ((System.ComponentModel.ISupportInitialize)(this.startBtn)).BeginInit();
             this.SuspendLayout();
             // 
@@ -44,7 +43,6 @@
             // 
             // startBtn
             // 
-            this.startBtn.Image = ((System.Drawing.Image)(resources.GetObject("startBtn.Image")));
             this.startBtn.Location = new System.Drawing.Point(3, 3);
             this.startBtn.Name = "startBtn";
             this.startBtn.Size = new System.Drawing.Size(174, 148);
@@ -64,6 +62,7 @@
             this.Controls.Add(this.startBtn);
             this.Name = "HomePage";
             this.Size = new System.Drawing.Size(362, 159);
+            this.Paint += new System.Windows.Forms.PaintEventHandler(this.Draw);
             ((System.ComponentModel.ISupportInitialize)(this.startBtn)).EndInit();
             this.ResumeLayout(false);
 
