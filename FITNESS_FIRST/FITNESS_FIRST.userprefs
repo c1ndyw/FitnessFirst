@@ -1,0 +1,15 @@
+﻿<Properties StartupConfiguration="{A7270E48-C45C-405E-A327-AD9C13CF151A}|Default">
+  <MonoDevelop.Ide.ItemProperties.FITNESS__FIRST PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.Workbench ActiveDocument="FITNESS_FIRST\HomePage.cs">
+    <Files>
+      <File FileName="FITNESS_FIRST\Achievementcs.Designer.cs" Line="140" Column="17" />
+      <File FileName="FITNESS_FIRST\HomePage.cs" Line="32" Column="46" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MultiItemStartupConfigurations />
+</Properties>
