@@ -1,6 +1,6 @@
-﻿namespace FitnessFirst
+﻿namespace Calendar.NET
 {
-    partial class CalendarPage
+    partial class EventToolTip
     {
         /// <summary> 
         /// Required designer variable.
@@ -30,18 +30,19 @@
         {
             this.SuspendLayout();
             // 
-            // CalendarPage
+            // EventToolTip
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Name = "CalendarPage";
-            this.Size = new System.Drawing.Size(711, 400);
-            this.Load += new System.EventHandler(this.CalendarPage_Load);
+            this.BackColor = System.Drawing.Color.Transparent;
+            this.DoubleBuffered = true;
+            this.Name = "EventToolTip";
+            this.Load += new System.EventHandler(this.EventToolTipLoad);
+            this.Paint += new System.Windows.Forms.PaintEventHandler(this.EventToolTipPaint);
             this.ResumeLayout(false);
 
         }
 
         #endregion
-
     }
 }

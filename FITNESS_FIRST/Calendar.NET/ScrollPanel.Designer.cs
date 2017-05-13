@@ -1,6 +1,6 @@
-﻿namespace FitnessFirst
+﻿namespace Calendar.NET
 {
-    partial class CalendarPage
+    partial class ScrollPanel
     {
         /// <summary> 
         /// Required designer variable.
@@ -30,18 +30,23 @@
         {
             this.SuspendLayout();
             // 
-            // CalendarPage
+            // ScrollPanel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Name = "CalendarPage";
-            this.Size = new System.Drawing.Size(711, 400);
-            this.Load += new System.EventHandler(this.CalendarPage_Load);
+            this.DoubleBuffered = true;
+            this.Name = "ScrollPanel";
+            this.Size = new System.Drawing.Size(280, 242);
+            this.Load += new System.EventHandler(this.ScrollPanel_Load);
+            this.Paint += new System.Windows.Forms.PaintEventHandler(this.ScrollPanel_Paint);
+            this.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ScrollPanel_MouseClick);
+            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.ScrollPanel_MouseDown);
+            this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.ScrollPanel_MouseMove);
+            this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.ScrollPanel_MouseUp);
             this.ResumeLayout(false);
 
         }
 
         #endregion
-
     }
 }

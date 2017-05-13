@@ -1,6 +1,6 @@
-﻿namespace FitnessFirst
+﻿namespace Calendar.NET
 {
-    partial class CalendarPage
+    partial class CoolButton
     {
         /// <summary> 
         /// Required designer variable.
@@ -30,18 +30,25 @@
         {
             this.SuspendLayout();
             // 
-            // CalendarPage
+            // CoolButton
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Name = "CalendarPage";
-            this.Size = new System.Drawing.Size(711, 400);
-            this.Load += new System.EventHandler(this.CalendarPage_Load);
+            this.BackColor = System.Drawing.Color.Transparent;
+            this.DoubleBuffered = true;
+            this.Name = "CoolButton";
+            this.Size = new System.Drawing.Size(72, 29);
+            this.Load += new System.EventHandler(this.CoolButtonLoad);
+            this.SizeChanged += new System.EventHandler(this.CoolButtonSizeChanged);
+            this.Paint += new System.Windows.Forms.PaintEventHandler(this.CoolButtonPaint);
+            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.CoolButtonMouseDown);
+            this.MouseEnter += new System.EventHandler(this.CoolButtonMouseEnter);
+            this.MouseLeave += new System.EventHandler(this.CoolButtonMouseLeave);
+            this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.CoolButtonMouseUp);
             this.ResumeLayout(false);
 
         }
 
         #endregion
-
     }
 }
