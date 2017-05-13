@@ -5,11 +5,6 @@
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
-  <MonoDevelop.Ide.Workbench ActiveDocument="FITNESS_FIRST\HomePage.cs">
-    <Files>
-      <File FileName="FITNESS_FIRST\Achievementcs.Designer.cs" Line="140" Column="17" />
-      <File FileName="FITNESS_FIRST\HomePage.cs" Line="32" Column="46" />
-    </Files>
-  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workbench />
   <MultiItemStartupConfigurations />
 </Properties>
