@@ -1,0 +1,12 @@
+E:\SoftwaresFiles\VisualStudio\FITNESS_FIRST\UnitTests\bin\Debug\Fitnessfirst.mdf
+E:\SoftwaresFiles\VisualStudio\FITNESS_FIRST\UnitTests\bin\Debug\Fitnessfirst_log.ldf
+E:\SoftwaresFiles\VisualStudio\FITNESS_FIRST\UnitTests\bin\Debug\UnitTests.dll
+E:\SoftwaresFiles\VisualStudio\FITNESS_FIRST\UnitTests\bin\Debug\UnitTests.pdb
+E:\SoftwaresFiles\VisualStudio\FITNESS_FIRST\UnitTests\bin\Debug\Calendar.NET.exe
+E:\SoftwaresFiles\VisualStudio\FITNESS_FIRST\UnitTests\bin\Debug\FitnessFirst.exe
+E:\SoftwaresFiles\VisualStudio\FITNESS_FIRST\UnitTests\bin\Debug\Calendar.NET.pdb
+E:\SoftwaresFiles\VisualStudio\FITNESS_FIRST\UnitTests\bin\Debug\Calendar.NET.xml
+E:\SoftwaresFiles\VisualStudio\FITNESS_FIRST\UnitTests\bin\Debug\FitnessFirst.pdb
+E:\SoftwaresFiles\VisualStudio\FITNESS_FIRST\UnitTests\obj\Debug\UnitTests.csprojResolveAssemblyReference.cache
+E:\SoftwaresFiles\VisualStudio\FITNESS_FIRST\UnitTests\obj\Debug\UnitTests.dll
+E:\SoftwaresFiles\VisualStudio\FITNESS_FIRST\UnitTests\obj\Debug\UnitTests.pdb
