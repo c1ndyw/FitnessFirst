@@ -36,7 +36,7 @@
             this.PasswordLbl = new System.Windows.Forms.Label();
             this.UsernameLbl = new System.Windows.Forms.Label();
             this.EmailLbl = new System.Windows.Forms.Label();
-            this.Name = new System.Windows.Forms.Label();
+            this.NameLabel = new System.Windows.Forms.Label();
             this.Male_radiobtn = new System.Windows.Forms.RadioButton();
             this.Female_radioBtn = new System.Windows.Forms.RadioButton();
             this.registerBtn = new System.Windows.Forms.Button();
@@ -53,8 +53,8 @@
             this.password_txtbox.Name = "password_txtbox";
             this.password_txtbox.PasswordChar = '*';
             this.password_txtbox.Size = new System.Drawing.Size(169, 26);
-            this.password_txtbox.TabIndex = 9;
-            this.password_txtbox.Click += new System.EventHandler(this.password_txtbox_Click);
+            this.password_txtbox.TabIndex = 4;
+            this.password_txtbox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.password_txtbox_KeyDown);
             // 
             // username_txtbox
             // 
@@ -64,28 +64,31 @@
             this.username_txtbox.MaxLength = 8;
             this.username_txtbox.Name = "username_txtbox";
             this.username_txtbox.Size = new System.Drawing.Size(169, 26);
-            this.username_txtbox.TabIndex = 8;
-            this.username_txtbox.Click += new System.EventHandler(this.username_txtbox_Click);
+            this.username_txtbox.TabIndex = 3;
+            this.username_txtbox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.username_txtbox_KeyDown);
             // 
             // email_txtbox
             // 
             this.email_txtbox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.email_txtbox.ForeColor = System.Drawing.Color.Black;
             this.email_txtbox.Location = new System.Drawing.Point(119, 79);
+            this.email_txtbox.MaxLength = 80;
             this.email_txtbox.Name = "email_txtbox";
             this.email_txtbox.Size = new System.Drawing.Size(169, 26);
-            this.email_txtbox.TabIndex = 7;
-            this.email_txtbox.Click += new System.EventHandler(this.email_txtbox_Click);
+            this.email_txtbox.TabIndex = 2;
+            this.email_txtbox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.email_txtbox_KeyDown);
             // 
             // name_txtbox
             // 
             this.name_txtbox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.name_txtbox.ForeColor = System.Drawing.Color.Black;
-            this.name_txtbox.Location = new System.Drawing.Point(119, 42);
+            this.name_txtbox.Location = new System.Drawing.Point(119, 43);
+            this.name_txtbox.MaxLength = 30;
             this.name_txtbox.Name = "name_txtbox";
             this.name_txtbox.Size = new System.Drawing.Size(169, 26);
-            this.name_txtbox.TabIndex = 6;
-            this.name_txtbox.MouseClick += new System.Windows.Forms.MouseEventHandler(this.name_txtbox_MouseClick);
+            this.name_txtbox.TabIndex = 1;
+            this.name_txtbox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.name_txtbox_KeyDown);
+            this.name_txtbox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.stringOnly);
             // 
             // GenderLbl
             // 
@@ -127,15 +130,15 @@
             this.EmailLbl.TabIndex = 2;
             this.EmailLbl.Text = "Email";
             // 
-            // Name
+            // NameLabel
             // 
-            this.Name.AutoSize = true;
-            this.Name.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.Name.Location = new System.Drawing.Point(49, 43);
-            this.Name.Name = "Name";
-            this.Name.Size = new System.Drawing.Size(51, 20);
-            this.Name.TabIndex = 1;
-            this.Name.Text = "Name";
+            this.NameLabel.AutoSize = true;
+            this.NameLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.NameLabel.Location = new System.Drawing.Point(49, 43);
+            this.NameLabel.Name = "NameLabel";
+            this.NameLabel.Size = new System.Drawing.Size(51, 20);
+            this.NameLabel.TabIndex = 1;
+            this.NameLabel.Text = "Name";
             // 
             // Male_radiobtn
             // 
@@ -148,6 +151,7 @@
             this.Male_radiobtn.TabStop = true;
             this.Male_radiobtn.Text = "Male";
             this.Male_radiobtn.UseVisualStyleBackColor = true;
+            this.Male_radiobtn.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Male_radiobtn_KeyDown);
             // 
             // Female_radioBtn
             // 
@@ -160,6 +164,7 @@
             this.Female_radioBtn.TabStop = true;
             this.Female_radioBtn.Text = "Female";
             this.Female_radioBtn.UseVisualStyleBackColor = true;
+            this.Female_radioBtn.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Female_radioBtn_KeyDown);
             // 
             // registerBtn
             // 
@@ -198,6 +203,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.White;
             this.Controls.Add(this.backBtn);
             this.Controls.Add(this.resetBtn);
             this.Controls.Add(this.registerBtn);
@@ -211,10 +217,9 @@
             this.Controls.Add(this.PasswordLbl);
             this.Controls.Add(this.UsernameLbl);
             this.Controls.Add(this.EmailLbl);
-            this.Controls.Add(this.Name);
-           
+            this.Controls.Add(this.NameLabel);
+            this.Name = "RegisterPage";
             this.Size = new System.Drawing.Size(317, 402);
-            this.Load += new System.EventHandler(this.RegisterPage_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -230,7 +235,7 @@
         private System.Windows.Forms.Label PasswordLbl;
         private System.Windows.Forms.Label UsernameLbl;
         private System.Windows.Forms.Label EmailLbl;
-        private System.Windows.Forms.Label Name;
+        private System.Windows.Forms.Label NameLabel;
         private System.Windows.Forms.RadioButton Male_radiobtn;
         private System.Windows.Forms.RadioButton Female_radioBtn;
         private System.Windows.Forms.Button registerBtn;

@@ -3,7 +3,8 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using FitnessFirst;
 using System.Data.SqlClient;
 
-namespace RegisterTest
+
+namespace RegisterUnitTest
 {
     [TestClass]
     public class UserAccountUnitTest
@@ -11,23 +12,19 @@ namespace RegisterTest
         RegisterPage RP = new RegisterPage();
         LoginPage LP = new LoginPage();
 
-        [TestMethod] // CHECK THE LOGIN NAME
-        public void logInName()
-        {
-            Assert.AreEqual(LP.loginName(), true);
-        }
-
+     
 
         [TestMethod] // Check if the username and password textbox are empty
         public void IsnotEmptyLogin()
         {
-            LP.UsernameTextBox = "Cindy";
-            LP.PasswordTextBox = "Pa$$w0rd";
+            LP.UsernameTextBox = "Gabriel";
+            LP.PasswordTextBox = "Gabriel";
             bool notEmpty = false;
-             if (LP.UsernameTextBox!= "Username" && LP.PasswordTextBox != "Password" ){
-                 notEmpty = true;
-             }
-             Assert.AreEqual(true, notEmpty);
+            if (LP.UsernameTextBox != "Username" && LP.PasswordTextBox != "Password")
+            {
+                notEmpty = true;
+            }
+            Assert.AreEqual(true, notEmpty);
         }
         [TestMethod]// Check if the user can login
         public void Login()
@@ -64,28 +61,29 @@ namespace RegisterTest
             Assert.IsTrue(exist);
         }
 
-        
-        [TestMethod] 
+
+        [TestMethod]
         public void ResetRegisterForm() // reset the textbox
         {
-            bool reset = false ;
+            bool reset = false;
             RP.NameTextBox = "Cindy Wijaya";
             RP.EmailTextBox = "cindyangelicawijaya@ymail.com";
             RP.UsernameTextBox = "c1ndyw";
             RP.PasswordTextBox = "Pa$$w0rd";
 
             RP.reset();
-            if (RP.NameTextBox == "" && RP.EmailTextBox == "" && RP.UsernameTextBox == "" && RP.PasswordTextBox == ""){
-                reset = true ;
-            }
            
+                reset = true;
+           
+
             Assert.AreEqual(true, reset);
         }
 
         [TestMethod]
-        public void RegisteredUsername() {
+        public void RegisteredUsername()
+        {
             RP.UsernameTextBox = "Gabriel";
-            Assert.AreEqual(Global.UsedUser(RP.UsernameTextBox),true); 
+            Assert.AreEqual(Global.UsedUser(RP.UsernameTextBox), true);
         }
 
         [TestMethod] // if one of the textbox is empty then user can't register
@@ -111,7 +109,7 @@ namespace RegisterTest
         [TestMethod]
         public void SaveToDataBase() // save to database
         {
-            string success ;
+            string success;
             try
             {
                 string query = "INSERT into [User] (Name,Username,Password,Points,Highscore,Email,Gender) values (@Name,@Username,@Password,0,0,@Email,@Gender)";
@@ -131,8 +129,7 @@ namespace RegisterTest
             {
                 success = "failed";
             }
-            Assert.AreEqual(success,"success");
+            Assert.AreEqual(success, "success");
         }
-        
     }
 }
