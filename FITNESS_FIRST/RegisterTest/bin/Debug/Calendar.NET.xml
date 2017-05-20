@@ -29,13 +29,13 @@
             Calendar Constructor
             </summary>
         </member>
-        <member name="M:Calendar.NET.Calendar.AddEventToDatabase(Calendar.NET.IEvent)">
+        <member name="M:Calendar.NET.Calendar.AddEventToDatabase(Calendar.NET.IEvent,System.Boolean)">
             <summary>
             Adds an event to the calendar database
             </summary>
             <param name="calendarEvent">The <see cref="T:Calendar.NET.IEvent"/> to add to the calendar database</param>
         </member>
-        <member name="M:Calendar.NET.Calendar.AddEvent(Calendar.NET.IEvent)">
+        <member name="M:Calendar.NET.Calendar.AddEvent(Calendar.NET.IEvent,System.Boolean)">
             <summary>
             Adds an event to the calendar
             </summary>
@@ -150,9 +150,19 @@
             </summary>
             <returns>A cloned <see cref="T:Calendar.NET.IEvent"/></returns>
         </member>
-        <member name="P:Calendar.NET.IEvent.Date">
+        <member name="P:Calendar.NET.IEvent.StartDate">
             <summary>
             The Date that the event occurs
+            </summary>
+        </member>
+        <member name="P:Calendar.NET.IEvent.EndDate">
+            <summary>
+            The Date that the event ends
+            </summary>
+        </member>
+        <member name="P:Calendar.NET.IEvent.Days">
+            <summary>
+            The Days for the events
             </summary>
         </member>
         <member name="P:Calendar.NET.IEvent.Enabled">
@@ -188,6 +198,11 @@
         <member name="P:Calendar.NET.IEvent.EventTextColor">
             <summary>
             The text color of the event
+            </summary>
+        </member>
+        <member name="P:Calendar.NET.IEvent.Alert">
+            <summary>
+            The alert notification. 1 = enable, 0, disable
             </summary>
         </member>
         <member name="P:Calendar.NET.IEvent.Rank">
