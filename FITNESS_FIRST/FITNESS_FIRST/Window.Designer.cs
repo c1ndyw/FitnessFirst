@@ -1,4 +1,4 @@
-﻿namespace WindowsFormsApplication1
+﻿namespace FitnessFirst
 {
     partial class Window
     {
@@ -34,6 +34,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(341, 261);
             this.MinimizeBox = false;
             this.Name = "Window";
@@ -45,6 +46,7 @@
         }
 
         #endregion
+
 
 
     }
