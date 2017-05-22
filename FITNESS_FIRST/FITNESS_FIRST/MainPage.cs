@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace WindowsFormsApplication1
+namespace FitnessFirst
 {
     public partial class MainPage : UserControl
     {
@@ -16,89 +16,118 @@ namespace WindowsFormsApplication1
         HomePage _homePage = new HomePage();
         CalendarPage _calendarPage = new CalendarPage();
         GraphPage _graphPage = new GraphPage();
-        SettingsPage _settingsPage = new SettingsPage();
+        FoodPage _settingsPage = new FoodPage();
+        AchievementPage _achievementPage = new AchievementPage();
         HelpPage _helpPage = new HelpPage();
+        FoodPage _foodPage = new FoodPage();
 
-        private UserControl[] _controls = new UserControl[6];
+        private Pages _currentSubPage = Pages.HomePage;
 
         public MainPage()
         {
             InitializeComponent();
+            Initialization();
         }
 
-        private void MainPage_Load(object sender, EventArgs e)
+        private void Initialization()
         {
-            init();
+            BackColor = Color.White;
             this.Controls.Add(_mainMenuHeader);
             this.Controls.Add(_homePage);
         }
 
-        private void calendarBtn_Click(object sender, EventArgs e)
+        public List<Calendar.NET.IEvent> getEvents()
         {
-            this.Controls.RemoveAt(1);
-            this.Controls.Add(_calendarPage);
-        }
-
-        private void graphBtn_Click(object sender, EventArgs e)
-        {
-            this.Controls.RemoveAt(1);
-            this.Controls.Add(_graphPage);
-        }
-
-        private void homeBtn_Click(object sender, EventArgs e)
-        {
-            this.Controls.RemoveAt(1);
-            this.Controls.Add(_homePage);
-        }
-
-        private void settingsBtn_Click(object sender, EventArgs e)
-        {
-            this.Controls.RemoveAt(1);
-            this.Controls.Add(_settingsPage);
-        }
-
-        private void helpBtn_Click(object sender, EventArgs e)
-        {
-            this.Controls.RemoveAt(1);
-            this.Controls.Add(_helpPage);
-        }
-
-        private void init()
-        {
-            _controls[0] = _mainMenuHeader;
-            _controls[1] = _homePage;
-            _controls[2] = _calendarPage;
-            _controls[3] = _graphPage;
-            _controls[4] = _settingsPage;
-            _controls[5] = _helpPage;
-            foreach (UserControl control in _controls)
-            {
-                if (control != _mainMenuHeader)
-                    control.Location = new Point(0, 100);
-                else
-                    control.Location = new Point(0, 0);
-            }
-            _mainMenuHeader.getButton("home").Click += new EventHandler(homeBtn_Click);
-            _mainMenuHeader.getButton("calendar").Click += new EventHandler(calendarBtn_Click);
-            _mainMenuHeader.getButton("graph").Click += new EventHandler(graphBtn_Click);
-            _mainMenuHeader.getButton("settings").Click += new EventHandler(settingsBtn_Click);
+            return _calendarPage.Calendar.GetEvents();
         }
 
         public void ReSize()
         {
+            UserControl[] _controls = new UserControl[8];
+            _controls[0] = _mainMenuHeader;
+            _controls[1] = _homePage;
+            _controls[2] = _graphPage;
+            _controls[3] = _calendarPage;
+            _controls[4] = _settingsPage;
+            _controls[5] = _achievementPage;
+            _controls[6] = _helpPage;
+            _controls[7] = _foodPage;
             foreach (UserControl control in _controls)
             {
+                if (control != _mainMenuHeader)
+                {
+                    control.Location = new Point(0, 100);
+                    control.Height = this.Height - 100;
+                }
+                else
+                {
+                    control.Location = new Point(0, 0);
+                    control.Height = 100;
+                }
                 control.Width = this.Width;
-                control.Height = this.Height - 100;
-                control.BackColor = Color.Brown;
             }
+            _mainMenuHeader.ReSize();
             _homePage.ReSize();
-            //_calendarPage.ReSize();
+            _calendarPage.ReSize();
             _graphPage.ReSize();
-            _mainMenuHeader.Width = this.Width;
-            _mainMenuHeader.Height = 100;
-            _mainMenuHeader.BackColor = Color.Blue;
-            _mainMenuHeader.resize();
+            _settingsPage.ReSize();
+            _achievementPage.ReSize();
+            _helpPage.ReSize();
+            _foodPage.ReSize();
+        }
+
+        public Results ChangePage(Pages page)
+        {
+            switch (page)
+            {
+                case Pages.HomePage:
+                    _homePage.ReSize();
+                    Controls.RemoveAt(1);
+                    Controls.Add(_homePage);
+                    break;
+                case Pages.CalendarPage:
+                    _calendarPage.ReSize();
+                    Controls.RemoveAt(1);
+                    Controls.Add(_calendarPage);
+                    Window.ShowHelp(Pages.CalendarPage, "Calendar Help", Window.caltext, Window.calhelp);
+                    break;
+                case Pages.SummaryPage:
+                    _graphPage.ReSize();
+                    _graphPage.InitializeGraph();
+                    Controls.RemoveAt(1);
+                    Controls.Add(_graphPage);
+                    Window.ShowHelp(Pages.SummaryPage, "Summary Help", Window.sumtext, Window.sumhelp);
+                    break;
+                case Pages.SettingsPage:
+                    _settingsPage.ReSize();
+                    Controls.RemoveAt(1);
+                    Controls.Add(_settingsPage);
+                    break;
+                case Pages.AchievementPage:
+                    _achievementPage.ReSize();
+                    _achievementPage.SetAchievement();
+                    Controls.RemoveAt(1);
+                    Controls.Add(_achievementPage);
+                    Window.ShowHelp(Pages.AchievementPage, "Achievement Help", Window.achtext, Window.achhelp);
+                    break;
+                case Pages.FoodPage:
+                    _foodPage.ReSize();
+                    Controls.RemoveAt(1);
+                    Controls.Add(_foodPage);
+                    Window.ShowHelp(Pages.FoodPage, "Food Help", Window.foodtext, Window.foodhelp);
+                    break;
+                default:
+                    return Results.Failed;
+            }
+            _currentSubPage = page;
+            return Results.Success;
+        }
+
+        public void RecallEvents()
+        {
+            _calendarPage.Calendar.UserId = Global.user.id;
+            _calendarPage.InitEvent();
+            _mainMenuHeader.RecallEvents();
         }
     }
 }

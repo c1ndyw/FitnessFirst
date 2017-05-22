@@ -51,13 +51,17 @@ namespace FitnessFirst
             graphBtn.Cursor = Cursors.Hand;
             graphBtn.BackgroundImage = FitnessFirst.Properties.Resources.graph;
             graphBtn.BackgroundImageLayout = ImageLayout.Zoom;
+            foodButton.Text = "";
+            foodButton.Name = "food";
+            foodButton.Cursor = Cursors.Hand;
+            foodButton.BackgroundImage = FitnessFirst.Properties.Resources.musicon;
             musicbutton.Text = "";
-            musicbutton.Name = "settings";
+            musicbutton.Name = "music";
             musicbutton.Cursor = Cursors.Hand;
             musicbutton.BackgroundImage = FitnessFirst.Properties.Resources.musicon;
             musicbutton.BackgroundImageLayout = ImageLayout.Zoom;
             alertBtn.Text = "";
-            alertBtn.Name = "settings";
+            alertBtn.Name = "alert";
             alertBtn.Cursor = Cursors.Hand;
             alertBtn.BackgroundImage = FitnessFirst.Properties.Resources.alerton;
             alertBtn.BackgroundImageLayout = ImageLayout.Zoom;
@@ -81,15 +85,16 @@ namespace FitnessFirst
         public void ReSize()
         {
             Height = 100;
-            Button[] _buttons = new Button[7];
+            Button[] _buttons = new Button[8];
             _buttons[0] = homeBtn;
             _buttons[1] = calendarBtn;
-            _buttons[2] = graphBtn;
             //_buttons[3] = settingsBtn;
-            _buttons[3] = achievementBtn;
-            _buttons[4] = musicButton;
-            _buttons[5] = alertBtn;
-            _buttons[6] = logoutBtn;
+            _buttons[2] = foodButton;
+            _buttons[3] = graphBtn;
+            _buttons[4] = achievementBtn;
+            _buttons[5] = musicButton;
+            _buttons[6] = alertBtn;
+            _buttons[7] = logoutBtn;
             for (int i = 0; i < _buttons.Length; i++)
             {
                 _buttons[_buttons.Length - i - 1].Location = new Point(this.Width - (i+1) * Global.ButtonSize - 40, 0);
@@ -129,6 +134,11 @@ namespace FitnessFirst
         private void HelpBtn_Click(object sender, EventArgs e)
         {
             Global.ChangePage(Pages.HelpPage);
+        }
+
+        private void FoodBtn_Click(object sender, EventArgs e)
+        {
+            Global.ChangePage(Pages.FoodPage);
         }
 
         private void musicButton_Click(object sender, EventArgs e)
