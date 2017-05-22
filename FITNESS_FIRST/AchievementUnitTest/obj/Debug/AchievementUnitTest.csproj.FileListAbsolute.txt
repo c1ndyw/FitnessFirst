@@ -1,0 +1,26 @@
+E:\1.Study\Bachelor\Sem 1 - 2017\SWE20001 - DP1\FITNESS_FIRST_LATEST3\AchievementUnitTest\bin\Debug\Fitnessfirst.mdf
+E:\1.Study\Bachelor\Sem 1 - 2017\SWE20001 - DP1\FITNESS_FIRST_LATEST3\AchievementUnitTest\bin\Debug\Fitnessfirst_log.ldf
+E:\1.Study\Bachelor\Sem 1 - 2017\SWE20001 - DP1\FITNESS_FIRST_LATEST3\AchievementUnitTest\bin\Debug\Microsoft.VisualStudio.TestPlatform.MSTest.TestAdapter.dll
+E:\1.Study\Bachelor\Sem 1 - 2017\SWE20001 - DP1\FITNESS_FIRST_LATEST3\AchievementUnitTest\bin\Debug\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.Interface.dll
+E:\1.Study\Bachelor\Sem 1 - 2017\SWE20001 - DP1\FITNESS_FIRST_LATEST3\AchievementUnitTest\bin\Debug\Microsoft.VisualStudio.TestPlatform.MSTestAdapter.PlatformServices.dll
+E:\1.Study\Bachelor\Sem 1 - 2017\SWE20001 - DP1\FITNESS_FIRST_LATEST3\AchievementUnitTest\bin\Debug\FitnessFirst.exe
+E:\1.Study\Bachelor\Sem 1 - 2017\SWE20001 - DP1\FITNESS_FIRST_LATEST3\AchievementUnitTest\bin\Debug\Microsoft.VisualStudio.TestPlatform.TestFramework.dll
+E:\1.Study\Bachelor\Sem 1 - 2017\SWE20001 - DP1\FITNESS_FIRST_LATEST3\AchievementUnitTest\bin\Debug\Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions.dll
+E:\1.Study\Bachelor\Sem 1 - 2017\SWE20001 - DP1\FITNESS_FIRST_LATEST3\AchievementUnitTest\bin\Debug\Calendar.NET.exe
+E:\1.Study\Bachelor\Sem 1 - 2017\SWE20001 - DP1\FITNESS_FIRST_LATEST3\AchievementUnitTest\bin\Debug\FitnessFirst.pdb
+E:\1.Study\Bachelor\Sem 1 - 2017\SWE20001 - DP1\FITNESS_FIRST_LATEST3\AchievementUnitTest\bin\Debug\FitnessFirst.exe.config
+E:\1.Study\Bachelor\Sem 1 - 2017\SWE20001 - DP1\FITNESS_FIRST_LATEST3\AchievementUnitTest\bin\Debug\Microsoft.VisualStudio.TestPlatform.TestFramework.xml
+E:\1.Study\Bachelor\Sem 1 - 2017\SWE20001 - DP1\FITNESS_FIRST_LATEST3\AchievementUnitTest\bin\Debug\Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions.xml
+E:\1.Study\Bachelor\Sem 1 - 2017\SWE20001 - DP1\FITNESS_FIRST_LATEST3\AchievementUnitTest\bin\Debug\Calendar.NET.pdb
+E:\1.Study\Bachelor\Sem 1 - 2017\SWE20001 - DP1\FITNESS_FIRST_LATEST3\AchievementUnitTest\bin\Debug\Calendar.NET.xml
+E:\1.Study\Bachelor\Sem 1 - 2017\SWE20001 - DP1\FITNESS_FIRST_LATEST3\AchievementUnitTest\obj\Debug\AchievementUnitTest.csprojResolveAssemblyReference.cache
+E:\1.Study\Bachelor\Sem 1 - 2017\SWE20001 - DP1\FITNESS_FIRST_LATEST3\AchievementUnitTest\obj\Debug\AchievementUnitTest.dll
+E:\1.Study\Bachelor\Sem 1 - 2017\SWE20001 - DP1\FITNESS_FIRST_LATEST3\AchievementUnitTest\obj\Debug\AchievementUnitTest.pdb
+E:\1.Study\Bachelor\Sem 1 - 2017\SWE20001 - DP1\FITNESS_FIRST_LATEST3\AchievementUnitTest\bin\Debug\AchievementUnitTest.dll
+E:\1.Study\Bachelor\Sem 1 - 2017\SWE20001 - DP1\FITNESS_FIRST_LATEST3\AchievementUnitTest\bin\Debug\AchievementUnitTest.pdb
+E:\1.Study\Bachelor\Sem 1 - 2017\SWE20001 - DP1\FITNESS_FIRST_LATEST3\AchievementUnitTest\obj\Debug\AchievementUnitTest.Properties.Resources.resources
+E:\1.Study\Bachelor\Sem 1 - 2017\SWE20001 - DP1\FITNESS_FIRST_LATEST3\AchievementUnitTest\obj\Debug\AchievementUnitTest.csproj.GenerateResource.Cache
+E:\SoftwaresFiles\VisualStudio\FITNESS_FIRST\AchievementUnitTest\obj\Debug\AchievementUnitTest.csprojResolveAssemblyReference.cache
+E:\SoftwaresFiles\VisualStudio\FITNESS_FIRST\AchievementUnitTest\obj\Debug\AchievementUnitTest.Properties.Resources.resources
+E:\SoftwaresFiles\VisualStudio\FITNESS_FIRST\AchievementUnitTest\obj\Debug\AchievementUnitTest.csproj.GenerateResource.Cache
+E:\SoftwaresFiles\VisualStudio\FITNESS_FIRST\AchievementUnitTest\obj\Debug\AchievementUnitTest.dll
