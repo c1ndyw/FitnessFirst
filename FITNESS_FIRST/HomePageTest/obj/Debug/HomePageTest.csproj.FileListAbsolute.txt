@@ -1,0 +1,11 @@
+E:\SoftwaresFiles\VisualStudio\FITNESS_FIRST\HomePageTest\bin\Debug\Fitnessfirst.mdf
+E:\SoftwaresFiles\VisualStudio\FITNESS_FIRST\HomePageTest\bin\Debug\Fitnessfirst_log.ldf
+E:\SoftwaresFiles\VisualStudio\FITNESS_FIRST\HomePageTest\bin\Debug\HomePageTest.dll
+E:\SoftwaresFiles\VisualStudio\FITNESS_FIRST\HomePageTest\bin\Debug\HomePageTest.pdb
+E:\SoftwaresFiles\VisualStudio\FITNESS_FIRST\HomePageTest\bin\Debug\FitnessFirst.exe
+E:\SoftwaresFiles\VisualStudio\FITNESS_FIRST\HomePageTest\bin\Debug\Calendar.NET.exe
+E:\SoftwaresFiles\VisualStudio\FITNESS_FIRST\HomePageTest\bin\Debug\FitnessFirst.pdb
+E:\SoftwaresFiles\VisualStudio\FITNESS_FIRST\HomePageTest\bin\Debug\Calendar.NET.pdb
+E:\SoftwaresFiles\VisualStudio\FITNESS_FIRST\HomePageTest\bin\Debug\Calendar.NET.xml
+E:\SoftwaresFiles\VisualStudio\FITNESS_FIRST\HomePageTest\obj\Debug\HomePageTest.dll
+E:\SoftwaresFiles\VisualStudio\FITNESS_FIRST\HomePageTest\obj\Debug\HomePageTest.pdb
