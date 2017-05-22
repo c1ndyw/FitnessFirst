@@ -1,4 +1,5 @@
-﻿namespace WindowsFormsApplication1 {
+﻿namespace FitnessFirst
+{
     
     
     public partial class FitnessfirstDataSet {
