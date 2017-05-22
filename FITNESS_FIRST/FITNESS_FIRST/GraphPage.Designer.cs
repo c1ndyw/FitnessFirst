@@ -32,6 +32,7 @@
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.DataPoint dataPoint1 = new System.Windows.Forms.DataVisualization.Charting.DataPoint(0D, 0D);
             System.Windows.Forms.DataVisualization.Charting.Title title1 = new System.Windows.Forms.DataVisualization.Charting.Title();
             this.fitnessfirstDataSet = new FitnessFirst.FitnessfirstDataSet();
             this.exerciseBindingSource = new System.Windows.Forms.BindingSource(this.components);
@@ -86,12 +87,14 @@
             series1.MarkerColor = System.Drawing.Color.Black;
             series1.MarkerStyle = System.Windows.Forms.DataVisualization.Charting.MarkerStyle.Circle;
             series1.Name = "Series1";
+            series1.Points.Add(dataPoint1);
             series1.XValueMember = "Date";
             series1.YValueMembers = "Count";
             this.chart1.Series.Add(series1);
             this.chart1.Size = new System.Drawing.Size(343, 257);
             this.chart1.TabIndex = 0;
             this.chart1.Text = "chart1";
+            title1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             title1.Name = "Title1";
             title1.Text = "Exercises Count by Date";
             this.chart1.Titles.Add(title1);
@@ -103,7 +106,7 @@
             this.Controls.Add(this.chart1);
             this.Name = "GraphPage";
             this.Size = new System.Drawing.Size(491, 295);
-            this.Load += new System.EventHandler(this.GraphPage_Load);
+            this.Paint += new System.Windows.Forms.PaintEventHandler(this.Draw);
             ((System.ComponentModel.ISupportInitialize)(this.fitnessfirstDataSet)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.exerciseBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).EndInit();
