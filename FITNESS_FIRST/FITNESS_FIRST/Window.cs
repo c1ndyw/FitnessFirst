@@ -127,14 +127,14 @@ namespace FitnessFirst
                     break;
                 case Pages.MainPage:
                     MainPage.ReSize();
+                    MainPage.ChangePage(Pages.HomePage);
+                    Controls.RemoveAt(0);
+                    Controls.Add(MainPage);
                     if (recall)
                     {
                         MainPage.RecallEvents();
                         recall = false;
                     }
-                    MainPage.ChangePage(Pages.HomePage);
-                    Controls.RemoveAt(0);
-                    Controls.Add(MainPage);
                     ShowHelp(Pages.HomePage, "Home Help", hometext, homehelp);
                     break;
                 default:
@@ -155,6 +155,7 @@ namespace FitnessFirst
             achhelp = help;
             exehelp = help;
             foodhelp = help;
+            recall = true;
         }
 
         public static void ShowHelp(Pages page, string title, string desc, bool help)

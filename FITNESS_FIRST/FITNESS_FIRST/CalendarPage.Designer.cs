@@ -37,6 +37,7 @@
             this.Name = "CalendarPage";
             this.Size = new System.Drawing.Size(711, 400);
             this.Load += new System.EventHandler(this.CalendarPage_Load);
+            this.Paint += new System.Windows.Forms.PaintEventHandler(this.Draw);
             this.ResumeLayout(false);
 
         }
