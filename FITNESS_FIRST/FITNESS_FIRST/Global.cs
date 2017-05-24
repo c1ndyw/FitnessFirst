@@ -34,8 +34,10 @@ namespace FitnessFirst
 
         public static Results ChangePage(Pages page) {
             if (page != CurrentPage)
+            {
+                CurrentPage = page;
                 return Window.ChangeWindow(page);
-            CurrentPage = page;
+            }
             return Results.Failed;
         }
 

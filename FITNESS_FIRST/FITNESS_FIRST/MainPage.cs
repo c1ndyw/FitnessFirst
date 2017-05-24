@@ -12,14 +12,14 @@ namespace FitnessFirst
 {
     public partial class MainPage : UserControl
     {
-        MainMenuHeader _mainMenuHeader = new MainMenuHeader();
-        HomePage _homePage = new HomePage();
-        CalendarPage _calendarPage = new CalendarPage();
-        GraphPage _graphPage = new GraphPage();
-        FoodPage _settingsPage = new FoodPage();
-        AchievementPage _achievementPage = new AchievementPage();
-        HelpPage _helpPage = new HelpPage();
-        FoodPage _foodPage = new FoodPage();
+        public MainMenuHeader _mainMenuHeader = new MainMenuHeader();
+        public HomePage _homePage = new HomePage();
+        public CalendarPage _calendarPage = new CalendarPage();
+        public GraphPage _graphPage = new GraphPage();
+        public FoodPage _settingsPage = new FoodPage();
+        public AchievementPage _achievementPage = new AchievementPage();
+        public HelpPage _helpPage = new HelpPage();
+        public FoodPage _foodPage = new FoodPage();
 
         private Pages _currentSubPage = Pages.HomePage;
 
@@ -87,6 +87,7 @@ namespace FitnessFirst
                     break;
                 case Pages.CalendarPage:
                     _calendarPage.ReSize();
+                    _calendarPage.InitEvent();
                     Controls.RemoveAt(1);
                     Controls.Add(_calendarPage);
                     Window.ShowHelp(Pages.CalendarPage, "Calendar Help", Window.caltext, Window.calhelp);

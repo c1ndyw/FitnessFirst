@@ -45,6 +45,8 @@ namespace FitnessFirst
         {
             if (MessageBox.Show("Are you sure you want to cancel stop exercise?", "Stopping Exercise", MessageBoxButtons.YesNoCancel) == DialogResult.Yes)
             {
+                ExercisePage ex = (ExercisePage)Parent;
+                ex.Reset();
                 Global.ChangePage(Pages.MainPage);
             }
         }
