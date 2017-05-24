@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 
 namespace Calendar.NET
@@ -9,6 +10,18 @@ namespace Calendar.NET
     public class HolidayEvent : IEvent
     {
         public int Rank
+        {
+            get;
+            set;
+        }
+
+        public int Alert
+        {
+            get;
+            set;
+        }
+
+        public List<DayOfWeek> Days
         {
             get;
             set;
@@ -44,7 +57,13 @@ namespace Calendar.NET
             set;
         }
 
-        public DateTime Date
+        public DateTime StartDate
+        {
+            get;
+            set;
+        }
+
+        public DateTime EndDate
         {
             get;
             set;
@@ -101,6 +120,7 @@ namespace Calendar.NET
             EventFont = new Font("Arial", 8, FontStyle.Bold);
             EventTextColor = Color.FromArgb(255, 255, 255);
             Rank = 1;
+            Alert = 1;
             EventLengthInHours = 24;
             ReadOnlyEvent = true;
             Enabled = true;
@@ -115,7 +135,9 @@ namespace Calendar.NET
             return new HolidayEvent
                          {
                              CustomRecurringFunction = CustomRecurringFunction,
-                             Date = Date,
+                             StartDate = StartDate,
+                             EndDate = EndDate,
+                             Alert = Alert,
                              Enabled = Enabled,
                              EventColor = EventColor,
                              EventFont = EventFont,

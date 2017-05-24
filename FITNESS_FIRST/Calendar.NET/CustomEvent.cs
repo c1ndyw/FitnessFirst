@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 
 namespace Calendar.NET
@@ -9,6 +10,18 @@ namespace Calendar.NET
     public class CustomEvent : IEvent
     {
         public int Rank
+        {
+            get;
+            set;
+        }
+
+        public int Alert
+        {
+            get;
+            set;
+        }
+
+        public List<DayOfWeek> Days
         {
             get;
             set;
@@ -44,7 +57,13 @@ namespace Calendar.NET
             set;
         }
 
-        public DateTime Date
+        public DateTime StartDate
+        {
+            get;
+            set;
+        }
+
+        public DateTime EndDate
         {
             get;
             set;
@@ -97,7 +116,9 @@ namespace Calendar.NET
         /// </summary>
         public CustomEvent()
         {
-            EventColor = Color.FromArgb(255, 80, 80);
+            int color1 = new Random().Next(40, 210);
+            int color2 = new Random().Next(40, 210);
+            EventColor = Color.FromArgb(255, color1, color2);
             EventFont = new Font("Arial", 8, FontStyle.Bold);
             EventTextColor = Color.FromArgb(0, 0, 0);
             Rank = 2;
@@ -115,7 +136,9 @@ namespace Calendar.NET
             return new CustomEvent
             {
                 CustomRecurringFunction = CustomRecurringFunction,
-                Date = Date,
+                StartDate = StartDate,
+                EndDate = EndDate,
+                Alert = Alert,
                 Enabled = Enabled,
                 EventColor = EventColor,
                 EventFont = EventFont,

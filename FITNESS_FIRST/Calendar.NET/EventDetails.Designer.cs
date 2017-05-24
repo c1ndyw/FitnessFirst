@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             this.label1 = new System.Windows.Forms.Label();
-            this.txtEventName = new System.Windows.Forms.TextBox();
-            this.dtDate = new System.Windows.Forms.DateTimePicker();
+            this.eventName = new System.Windows.Forms.TextBox();
+            this.startDate = new System.Windows.Forms.DateTimePicker();
             this.label2 = new System.Windows.Forms.Label();
             this.gbBasics = new System.Windows.Forms.GroupBox();
             this.gbRecurringOptions = new System.Windows.Forms.GroupBox();
@@ -41,6 +41,8 @@
             this.btnOk = new System.Windows.Forms.Button();
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
             this.btnCancel = new System.Windows.Forms.Button();
+            this.label4 = new System.Windows.Forms.Label();
+            this.endDate = new System.Windows.Forms.DateTimePicker();
             this.gbBasics.SuspendLayout();
             this.gbRecurringOptions.SuspendLayout();
             this.SuspendLayout();
@@ -48,46 +50,48 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(2, 38);
+            this.label1.Location = new System.Drawing.Point(26, 66);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(69, 13);
             this.label1.TabIndex = 0;
             this.label1.Text = "Event Name:";
             // 
-            // txtEventName
+            // eventName
             // 
-            this.txtEventName.Location = new System.Drawing.Point(71, 36);
-            this.txtEventName.Name = "txtEventName";
-            this.txtEventName.Size = new System.Drawing.Size(200, 20);
-            this.txtEventName.TabIndex = 1;
+            this.eventName.Location = new System.Drawing.Point(111, 64);
+            this.eventName.Name = "eventName";
+            this.eventName.Size = new System.Drawing.Size(200, 20);
+            this.eventName.TabIndex = 1;
             // 
-            // dtDate
+            // startDate
             // 
-            this.dtDate.CustomFormat = "M/d/yyyy h:mm tt";
-            this.dtDate.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dtDate.Location = new System.Drawing.Point(71, 13);
-            this.dtDate.Name = "dtDate";
-            this.dtDate.Size = new System.Drawing.Size(200, 20);
-            this.dtDate.TabIndex = 2;
+            this.startDate.CustomFormat = "M/d/yyyy h:mm tt";
+            this.startDate.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.startDate.Location = new System.Drawing.Point(111, 13);
+            this.startDate.Name = "startDate";
+            this.startDate.Size = new System.Drawing.Size(200, 20);
+            this.startDate.TabIndex = 2;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(6, 16);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(64, 13);
+            this.label2.Size = new System.Drawing.Size(89, 13);
             this.label2.TabIndex = 3;
-            this.label2.Text = "Event Date:";
+            this.label2.Text = "Event Start Date:";
             // 
             // gbBasics
             // 
+            this.gbBasics.Controls.Add(this.label4);
+            this.gbBasics.Controls.Add(this.endDate);
             this.gbBasics.Controls.Add(this.label2);
             this.gbBasics.Controls.Add(this.label1);
-            this.gbBasics.Controls.Add(this.dtDate);
-            this.gbBasics.Controls.Add(this.txtEventName);
+            this.gbBasics.Controls.Add(this.startDate);
+            this.gbBasics.Controls.Add(this.eventName);
             this.gbBasics.Location = new System.Drawing.Point(12, 12);
             this.gbBasics.Name = "gbBasics";
-            this.gbBasics.Size = new System.Drawing.Size(317, 67);
+            this.gbBasics.Size = new System.Drawing.Size(317, 102);
             this.gbBasics.TabIndex = 4;
             this.gbBasics.TabStop = false;
             this.gbBasics.Text = "Basics";
@@ -97,7 +101,7 @@
             this.gbRecurringOptions.Controls.Add(this.chkThisDayForwardOnly);
             this.gbRecurringOptions.Controls.Add(this.cbRecurringFrequency);
             this.gbRecurringOptions.Controls.Add(this.label3);
-            this.gbRecurringOptions.Location = new System.Drawing.Point(12, 95);
+            this.gbRecurringOptions.Location = new System.Drawing.Point(12, 133);
             this.gbRecurringOptions.Name = "gbRecurringOptions";
             this.gbRecurringOptions.Size = new System.Drawing.Size(323, 68);
             this.gbRecurringOptions.TabIndex = 5;
@@ -138,7 +142,7 @@
             // 
             // btnOk
             // 
-            this.btnOk.Location = new System.Drawing.Point(12, 178);
+            this.btnOk.Location = new System.Drawing.Point(12, 216);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(75, 23);
             this.btnOk.TabIndex = 7;
@@ -148,7 +152,7 @@
             // 
             // btnCancel
             // 
-            this.btnCancel.Location = new System.Drawing.Point(261, 178);
+            this.btnCancel.Location = new System.Drawing.Point(261, 216);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
             this.btnCancel.TabIndex = 8;
@@ -156,11 +160,29 @@
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.BtnCancelClick);
             // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(9, 41);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(86, 13);
+            this.label4.TabIndex = 5;
+            this.label4.Text = "Event End Date:";
+            // 
+            // endDate
+            // 
+            this.endDate.CustomFormat = "M/d/yyyy h:mm tt";
+            this.endDate.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.endDate.Location = new System.Drawing.Point(111, 38);
+            this.endDate.Name = "endDate";
+            this.endDate.Size = new System.Drawing.Size(200, 20);
+            this.endDate.TabIndex = 4;
+            // 
             // EventDetails
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(348, 215);
+            this.ClientSize = new System.Drawing.Size(348, 257);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnOk);
             this.Controls.Add(this.gbRecurringOptions);
@@ -172,7 +194,6 @@
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "EventDetails";
-            this.Load += new System.EventHandler(this.EventDetailsLoad);
             this.gbBasics.ResumeLayout(false);
             this.gbBasics.PerformLayout();
             this.gbRecurringOptions.ResumeLayout(false);
@@ -184,8 +205,8 @@
         #endregion
 
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox txtEventName;
-        private System.Windows.Forms.DateTimePicker dtDate;
+        private System.Windows.Forms.TextBox eventName;
+        private System.Windows.Forms.DateTimePicker startDate;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.GroupBox gbBasics;
         private System.Windows.Forms.GroupBox gbRecurringOptions;
@@ -196,5 +217,7 @@
         private System.Windows.Forms.Button btnOk;
         private System.Windows.Forms.ColorDialog colorDialog1;
         private System.Windows.Forms.Button btnCancel;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.DateTimePicker endDate;
     }
 }

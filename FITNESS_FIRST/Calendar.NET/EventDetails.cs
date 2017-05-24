@@ -2,6 +2,7 @@
 using System.Globalization;
 using System.Drawing;
 using System.Windows.Forms;
+using System.Collections.Generic;
 
 namespace Calendar.NET
 {
@@ -10,6 +11,7 @@ namespace Calendar.NET
         public IEvent _event;
         public IEvent _newEvent;
         public Calendar _form;
+        public bool update = false;
 
 
       //  public _IEvent newEvent = new _IEvent();
@@ -47,12 +49,6 @@ namespace Calendar.NET
            _form= form;
 
         }
-      
-    
-        private void EventDetailsLoad(object sender, EventArgs e)
-        {
-
-        }
 
         public void PopulateComboBox()
         {
@@ -76,13 +72,13 @@ namespace Calendar.NET
                 retval = RecurringFrequencies.Custom;
             if (f.Equals("Daily"))
                 retval = RecurringFrequencies.Daily;
-            if (f.Equals("Every Monday, Wednesday and Friday"))
+            if (f.Equals("Every Monday, Wednesday and Friday") || f.Equals("EveryMonWedFri"))
                 retval = RecurringFrequencies.EveryMonWedFri;
-            if (f.Equals("Every Tuesday and Thursday"))
+            if (f.Equals("Every Tuesday and Thursday") || f.Equals("EveryTueThurs"))
                 retval = RecurringFrequencies.EveryTueThurs;
-            if (f.Equals("Every Week Day (Mon - Fri)"))
+            if (f.Equals("Every Week Day (Mon - Fri)") || f.Equals("EveryWeekday"))
                 retval = RecurringFrequencies.EveryWeekday;
-            if (f.Equals("Every Weekend (Sat & Sun)"))
+            if (f.Equals("Every Weekend (Sat & Sun)") || f.Equals("EveryWeekend"))
                 retval = RecurringFrequencies.EveryWeekend;
             if (f.Equals("Every Month") || f.Equals("Monthly"))
                 retval = RecurringFrequencies.Monthly;
@@ -137,9 +133,11 @@ namespace Calendar.NET
 
         public void FillValues()
         {
-            txtEventName.Text = _event.EventText;
-            dtDate.Value = _event.Date;
-            dtDate.CustomFormat = _event.IgnoreTimeComponent ? "M/d/yyyy" : "M/d/yyyy h:mm tt";
+            eventName.Text = _event.EventText;
+            startDate.Value = _event.StartDate;
+            endDate.Value = _event.EndDate;
+            startDate.CustomFormat = _event.IgnoreTimeComponent ? "M/d/yyyy" : "M/d/yyyy h:mm tt";
+            endDate.CustomFormat = _event.IgnoreTimeComponent ? "M/d/yyyy" : "M/d/yyyy h:mm tt";
             cbRecurringFrequency.SelectedItem = RecurringFrequencyToString(_event.RecurringFrequency);
             chkThisDayForwardOnly.Enabled = _event.RecurringFrequency != RecurringFrequencies.None;
             //chkEnabled.Checked = _event.Enabled;
@@ -175,16 +173,20 @@ namespace Calendar.NET
             //_newEvent.IgnoreTimeComponent = chkIgnoreTimeComponent.Checked;
            // _newEvent.TooltipEnabled = chkEnableTooltip.Checked;
             //DateTime dt = dtDate.va
-            if (cbRecurringFrequency.Text == "" || txtEventName.Text == "") return;
+            if (cbRecurringFrequency.Text == "" || eventName.Text == "") return;
             var exerciseEvent = new CustomEvent
             {
-                Date = dtDate.Value,
+                StartDate = startDate.Value,
+                EndDate = endDate.Value,
                 RecurringFrequency = StringToRecurringFrequencies(cbRecurringFrequency.SelectedItem.ToString()),
                 EventLengthInHours = 1,
-                EventText = txtEventName.Text,
-                EventFont = new Font(FontFamily.GenericSansSerif, 12.0f, FontStyle.Regular)
+                Alert = 1,
+                EventText = eventName.Text,
+                EventFont = new Font(FontFamily.GenericSansSerif, 12.0f, FontStyle.Regular),
+                Days = new List<DayOfWeek>()
             };
-            _form.AddEvent(exerciseEvent);
+            Calendar.initDays(exerciseEvent);
+            _newEvent = exerciseEvent;
             DialogResult = DialogResult.OK;
             Close();
         }

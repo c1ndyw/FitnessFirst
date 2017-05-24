@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 
 namespace Calendar.NET
@@ -59,7 +60,15 @@ namespace Calendar.NET
         /// <summary>
         /// The Date that the event occurs
         /// </summary>
-        DateTime Date { get; set; }
+        DateTime StartDate { get; set; }
+        /// <summary>
+        /// The Date that the event ends
+        /// </summary>
+        DateTime EndDate { get; set; }
+        /// <summary>
+        /// The Days for the events
+        /// </summary>
+        List<DayOfWeek> Days { get; set; }
         /// <summary>
         /// True if the event is enabled, otherwise false
         /// </summary>
@@ -88,6 +97,10 @@ namespace Calendar.NET
         /// The text color of the event
         /// </summary>
         Color EventTextColor { get; set; }
+        /// <summary>
+        /// The alert notification. 1 = enable, 0, disable
+        /// </summary>
+        int Alert { get; set; }
         /// <summary>
         /// The ranking of the event that determines the order in which it is displayed on a particular day
         /// </summary>
