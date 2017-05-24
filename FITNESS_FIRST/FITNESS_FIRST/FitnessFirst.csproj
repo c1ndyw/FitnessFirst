@@ -308,6 +308,7 @@
     <None Include="Resources\Images\disabled.png" />
     <None Include="Resources\Images\enabled.png" />
     <None Include="Resources\Images\Empty.png" />
+    <None Include="Resources\Images\foodicon.png" />
     <Content Include="Resources\Images\Gold.png" />
     <Content Include="Resources\Images\logo.png" />
     <None Include="Resources\sound\Telephone Ring.wav" />
