@@ -66,6 +66,12 @@ namespace Calendar.NET
 
         private const int MarginSize = 20;
 
+        public int UserId
+        {
+            get { return userid; }
+            set { userid = value; }
+        }
+
         /// <summary>
         /// Indicates the font for the times on the day view
         /// </summary>
@@ -302,12 +308,6 @@ namespace Calendar.NET
                 _calendarDate = value;
                 Refresh();
             }
-        }
-
-        public int UserId
-        {
-            get { return userid; }
-            set { userid = value; }
         }
 
         /// <summary>
