@@ -10,23 +10,23 @@ namespace Calendar.NET
 
             if (rankComp == 0)
             {
-                int comp1 = x.Date.Day.CompareTo(y.Date.Day);
+                int comp1 = x.StartDate.Day.CompareTo(y.StartDate.Day);
 
                 if (comp1 == 0)
                 {
-                    int comp2 = x.Date.Month.CompareTo(y.Date.Month);
+                    int comp2 = x.StartDate.Month.CompareTo(y.StartDate.Month);
 
                     if (comp2 == 0)
                     {
-                        int comp3 = x.Date.Year.CompareTo(y.Date.Year);
+                        int comp3 = x.StartDate.Year.CompareTo(y.StartDate.Year);
 
                         if (comp3 == 0)
                         {
-                            int comp4 = x.Date.Hour.CompareTo(y.Date.Hour);
+                            int comp4 = x.StartDate.Hour.CompareTo(y.StartDate.Hour);
 
                             if (comp4 == 0)
                             {
-                                int comp5 = x.Date.Minute.CompareTo(y.Date.Minute);
+                                int comp5 = x.StartDate.Minute.CompareTo(y.StartDate.Minute);
 
                                 if (comp5 == 0)
                                 {

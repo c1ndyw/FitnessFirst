@@ -51,8 +51,9 @@ namespace Calendar.NET
         private bool _highlightCurrentDay;
         private CalendarViews _calendarView;
         private readonly ScrollPanel _scrollPanel;
+        private int userid = 0;
 
-        private readonly List<IEvent> _events;
+        private static readonly List<IEvent> _events = new List<IEvent>();
         private readonly List<Rectangle> _rectangles;
         private readonly Dictionary<int, Point> _calendarDays;
         private readonly List<CalendarEvent> _calendarEvents;
@@ -61,6 +62,7 @@ namespace Calendar.NET
         private System.ComponentModel.IContainer components;
         private ToolStripMenuItem _miProperties;
         private TodayButton todayButton1;
+        private ToolStripMenuItem deleteToolStripMenuItem;
 
         private const int MarginSize = 20;
 
@@ -302,6 +304,12 @@ namespace Calendar.NET
             }
         }
 
+        public int UserId
+        {
+            get { return userid; }
+            set { userid = value; }
+        }
+
         /// <summary>
         /// Calendar Constructor
         /// </summary>
@@ -329,7 +337,6 @@ namespace Calendar.NET
 
             _scrollPanel.RightButtonClicked += ScrollPanelRightButtonClicked;
 
-            _events = new List<IEvent>();
             _rectangles = new List<Rectangle>();
             _calendarDays = new Dictionary<int, Point>();
             _calendarEvents = new List<CalendarEvent>();
@@ -338,9 +345,7 @@ namespace Calendar.NET
 
             Controls.Add(_eventTip);
 
-            InitEvent();
-            LoadPresetHolidays = true;
-
+            //PresetHolidays();
             _scrollPanel.Visible = false;
             Controls.Add(_scrollPanel);
         }
@@ -354,6 +359,7 @@ namespace Calendar.NET
             this._contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this._miProperties = new System.Windows.Forms.ToolStripMenuItem();
             this.todayButton1 = new TodayButton();
+            this.deleteToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this._contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -411,14 +417,15 @@ namespace Calendar.NET
             // _contextMenuStrip1
             // 
             this._contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this._miProperties});
+            this._miProperties,
+            this.deleteToolStripMenuItem});
             this._contextMenuStrip1.Name = "_contextMenuStrip1";
-            this._contextMenuStrip1.Size = new System.Drawing.Size(141, 26);
+            this._contextMenuStrip1.Size = new System.Drawing.Size(153, 70);
             // 
             // _miProperties
             // 
             this._miProperties.Name = "_miProperties";
-            this._miProperties.Size = new System.Drawing.Size(140, 22);
+            this._miProperties.Size = new System.Drawing.Size(152, 22);
             this._miProperties.Text = "Properties...";
             this._miProperties.Click += new System.EventHandler(this.MenuItemPropertiesClick);
             // 
@@ -438,6 +445,13 @@ namespace Calendar.NET
             this.todayButton1.TabIndex = 3;
             this.todayButton1.TextColor = System.Drawing.Color.Black;
             this.todayButton1.Click += new System.EventHandler(this.addButton_Click);
+            // 
+            // deleteToolStripMenuItem
+            // 
+            this.deleteToolStripMenuItem.Name = "deleteToolStripMenuItem";
+            this.deleteToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.deleteToolStripMenuItem.Text = "Delete";
+            this.deleteToolStripMenuItem.Click += new System.EventHandler(this.MenuItemPropertiesClick);
             // 
             // Calendar
             // 
@@ -460,28 +474,37 @@ namespace Calendar.NET
 
         public bool InitEvent()
         {
+            _events.Clear();
+            if (userid < 0) return false;
             string connString = "Data Source=(LocalDB)\\v11.0;AttachDbFilename=|DataDirectory|\\Fitnessfirst.mdf";
             SqlConnection conn = new SqlConnection(connString);
-            SqlCommand command = new SqlCommand("select * from [schedule]", conn);
-            string[] scheduleval = new string[7];
+            SqlCommand command = new SqlCommand("select * from [schedule] where userid = @userid or userid = 0", conn);
+            command.Parameters.AddWithValue("@userid", userid);
+            string[] scheduleval = new string[8];
             try
             {
+                Random r = new Random();
                 conn.Open();
                 SqlDataReader reader = command.ExecuteReader();
                 while (reader.Read())
                 {
-                    for (int i = 0; i < 7; i++)
+                    for (int i = 0; i < scheduleval.Length; i++)
                     {
                         scheduleval[i] = reader[i].ToString();
                     }
                     var exerciseEvent = new CustomEvent
                     {
-                        Date = Convert.ToDateTime(scheduleval[4]),
+                        StartDate = Convert.ToDateTime(scheduleval[4]),
+                        EndDate = Convert.ToDateTime(scheduleval[5]),
+                        Alert = Convert.ToInt32(scheduleval[7]),
                         RecurringFrequency = EventDetails.StringToRecurringFrequencies(scheduleval[3].ToString()),
                         EventLengthInHours = 1,
                         EventText = scheduleval[2].ToString(),
-                        EventFont = new Font(FontFamily.GenericSansSerif, 12.0f, FontStyle.Regular)
+                        EventFont = new Font(FontFamily.GenericSansSerif, 12.0f, FontStyle.Regular),
+                        EventColor = Color.FromArgb(255, r.Next(40, 130), r.Next(40, 130)),
+                        Days = new List<DayOfWeek>()
                     };
+                    initDays(exerciseEvent);
                     _events.Add(exerciseEvent);
                 }
                 reader.Close();
@@ -497,23 +520,63 @@ namespace Calendar.NET
             }
         }
 
+        public static void initDays(IEvent e)
+        {
+            if (e.RecurringFrequency == RecurringFrequencies.EveryMonWedFri)
+            {
+                e.Days.Add(DayOfWeek.Monday);
+                e.Days.Add(DayOfWeek.Wednesday);
+                e.Days.Add(DayOfWeek.Friday);
+            }
+            else if (e.RecurringFrequency == RecurringFrequencies.EveryTueThurs)
+            {
+                e.Days.Add(DayOfWeek.Tuesday);
+                e.Days.Add(DayOfWeek.Thursday);
+            }
+            else if (e.RecurringFrequency == RecurringFrequencies.EveryWeekday)
+            {
+                e.Days.Add(DayOfWeek.Monday);
+                e.Days.Add(DayOfWeek.Tuesday);
+                e.Days.Add(DayOfWeek.Wednesday);
+                e.Days.Add(DayOfWeek.Thursday);
+                e.Days.Add(DayOfWeek.Friday);
+            }
+            else if (e.RecurringFrequency == RecurringFrequencies.EveryWeekend)
+            {
+                e.Days.Add(DayOfWeek.Saturday);
+                e.Days.Add(DayOfWeek.Sunday);
+            }
+            else if (e.RecurringFrequency == RecurringFrequencies.Daily)
+            {
+                e.Days.Add(DayOfWeek.Monday);
+                e.Days.Add(DayOfWeek.Tuesday);
+                e.Days.Add(DayOfWeek.Wednesday);
+                e.Days.Add(DayOfWeek.Thursday);
+                e.Days.Add(DayOfWeek.Friday);
+                e.Days.Add(DayOfWeek.Saturday);
+                e.Days.Add(DayOfWeek.Sunday);
+            }
+        }
+
         /// <summary>
         /// Adds an event to the calendar database
         /// </summary>
         /// <param name="calendarEvent">The <see cref="IEvent"/> to add to the calendar database</param>
-        public bool AddEventToDatabase(IEvent calendarEvent)
+        public bool AddEventToDatabase(IEvent calendarEvent, bool holiday)
         {
+            if (userid == 0 && !holiday) return false;
             string connString = "Data Source=(LocalDB)\\v11.0;AttachDbFilename=|DataDirectory|\\Fitnessfirst.mdf";
             SqlConnection conn = new SqlConnection(connString);
             //SqlCommand command = new SqlCommand("insert into [user] (name,username,password,points,highscore,email,gender) values ('asd','dsa','qwe',1,3,'asd@yahoo.com','M')", conn);
-            SqlCommand command = new SqlCommand("insert into [schedule] (name,userid,recurring,startdate,enddate,color) values (@name,@userid,@recurring,@startdate,@enddate,@color)", conn);
+            SqlCommand command = new SqlCommand("insert into [schedule] (name,userid,recurring,startdate,enddate,color,alert) values (@name,@userid,@recurring,@startdate,@enddate,@color,@alert)", conn);
             command.CommandType = System.Data.CommandType.Text;
             command.Parameters.AddWithValue("@name", calendarEvent.EventText);
-            command.Parameters.AddWithValue("@userid", 0);
+            command.Parameters.AddWithValue("@userid", userid);
             command.Parameters.AddWithValue("@recurring", calendarEvent.RecurringFrequency.ToString());
-            command.Parameters.AddWithValue("@startdate", calendarEvent.Date);
-            command.Parameters.AddWithValue("@enddate", calendarEvent.Date);
-            command.Parameters.AddWithValue("@color", calendarEvent.EventTextColor.ToString());
+            command.Parameters.AddWithValue("@startdate", calendarEvent.StartDate);
+            command.Parameters.AddWithValue("@enddate", calendarEvent.EndDate);
+            command.Parameters.AddWithValue("@color", calendarEvent.EventColor.ToString());
+            command.Parameters.AddWithValue("@alert", calendarEvent.Alert);
             try
             {
                 conn.Open();
@@ -524,7 +587,31 @@ namespace Calendar.NET
             catch (Exception ex)
             {
                 Console.WriteLine(ex);
-                MessageBox.Show("insert failed" + ex.ToString());
+                MessageBox.Show("insert failed");
+                return false;
+            }
+            return true;
+        }
+
+        public bool DeleteEventFromDatabase(IEvent calendarEvent)
+        {
+            if (userid == -1) return false;
+            string connString = "Data Source=(LocalDB)\\v11.0;AttachDbFilename=|DataDirectory|\\Fitnessfirst.mdf";
+            SqlConnection conn = new SqlConnection(connString);
+            SqlCommand command = new SqlCommand("delete from [schedule] where name = @name and userid = @userid", conn);
+            command.CommandType = System.Data.CommandType.Text;
+            command.Parameters.AddWithValue("@name", calendarEvent.EventText);
+            command.Parameters.AddWithValue("@userid", userid);
+            try
+            {
+                conn.Open();
+                command.ExecuteNonQuery();
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                MessageBox.Show("delete failed");
                 return false;
             }
             return true;
@@ -534,25 +621,28 @@ namespace Calendar.NET
         /// Adds an event to the calendar
         /// </summary>
         /// <param name="calendarEvent">The <see cref="IEvent"/> to add to the calendar</param>
-        public bool AddEvent(IEvent calendarEvent)
+        public bool AddEvent(IEvent calendarEvent, bool holiday)
         {
             foreach (IEvent eventt in _events)
             {
                 if (eventt.EventText == calendarEvent.EventText)
                 {
-                    if (eventt.Date == calendarEvent.Date)
+                    if (eventt.StartDate == calendarEvent.StartDate && eventt.EndDate == calendarEvent.EndDate && eventt.RecurringFrequency == calendarEvent.RecurringFrequency)
                     {
                         //MessageBox.Show("Existing event has already been added.", "Event Exist");
                         return false;
                     }
-                    if (MessageBox.Show("The event has already exist in the calendar. Do you want to add more date for this event?", "Event Exist", MessageBoxButtons.YesNoCancel) != DialogResult.Yes)
+                    if (MessageBox.Show("The event has already exist in the calendar. Do you want to edit this event?", "Event Exist", MessageBoxButtons.YesNoCancel) != DialogResult.Yes)
                     {
                         return false;
                     }
+                    _events.Remove(eventt);
+                    DeleteEventFromDatabase(eventt);
+                    break;
                 }
             }
             _events.Add(calendarEvent);
-            AddEventToDatabase(calendarEvent);
+            AddEventToDatabase(calendarEvent, holiday);
             Refresh();
             return true;
         }
@@ -602,7 +692,7 @@ namespace Calendar.NET
                     _showingToolTip = true;
                     _eventTip.EventToolTipText = z.Event.EventText;
                     if (z.Event.IgnoreTimeComponent == false)
-                        _eventTip.EventToolTipText += "\n" + z.Event.Date.ToShortTimeString();
+                        _eventTip.EventToolTipText += "\n" + z.Event.StartDate.ToShortTimeString();
                     _eventTip.Location = new Point(e.X + 5, e.Y - _eventTip.CalculateSize().Height);
                     _eventTip.ShouldRender = true;
                     _eventTip.Visible = true;
@@ -689,15 +779,27 @@ namespace Calendar.NET
         {
             if (_clickedEvent == null)
                 return;
-
-            var ed = new EventDetails { Event = _clickedEvent.Event };
-
-            if (ed.ShowDialog(this) == DialogResult.OK)
+            ToolStripMenuItem t = (ToolStripMenuItem)sender;
+            if (t.Text == "Delete")
             {
-                _events.Remove(_clickedEvent.Event);
-                _events.Add(ed.NewEvent);
-                Refresh();
+                if (MessageBox.Show("Are you sure you want to delete this event?", "Delete Event", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning) == DialogResult.Yes)
+                {
+                    RemoveEvent(_clickedEvent.Event);
+                    DeleteEventFromDatabase(_clickedEvent.Event);
+                }
             }
+            else
+            {
+                var ed = new EventDetails(this) { Event = _clickedEvent.Event };
+
+                if (ed.ShowDialog(this) == DialogResult.OK)
+                {
+                    RemoveEvent(_clickedEvent.Event);
+                    DeleteEventFromDatabase(_clickedEvent.Event);
+                    AddEvent(ed.NewEvent, false);
+                }
+            }
+            Refresh();
             _clickedEvent = null;
         }
 
@@ -711,103 +813,114 @@ namespace Calendar.NET
         {
             var aprilFools = new HolidayEvent
             {
-                Date = new DateTime(DateTime.Now.Year, 4, 1),
+                StartDate = new DateTime(DateTime.Now.Year, 4, 1),
+                EndDate = new DateTime(DateTime.Now.Year, 4, 1),
                 RecurringFrequency = RecurringFrequencies.Yearly,
                 EventText = "April Fools Day"
             };
-            AddEvent(aprilFools);
+            AddEvent(aprilFools, true);
 
             var memorialDay = new HolidayEvent
             {
-                Date = new DateTime(DateTime.Now.Year, 5, 28),
+                StartDate = new DateTime(DateTime.Now.Year, 5, 28),
+                EndDate = new DateTime(DateTime.Now.Year, 5, 28),
                 RecurringFrequency = RecurringFrequencies.Custom,
                 EventText = "Memorial Day",
                 CustomRecurringFunction = MemorialDayHandler
             };
-            AddEvent(memorialDay);
+            AddEvent(memorialDay, true);
 
             var newYears = new HolidayEvent
             {
-                Date = new DateTime(DateTime.Now.Year, 1, 1),
+                StartDate = new DateTime(DateTime.Now.Year, 1, 1),
+                EndDate = new DateTime(DateTime.Now.Year, 1, 1),
                 RecurringFrequency = RecurringFrequencies.Yearly,
                 EventText = "New Years Day"
             };
-            AddEvent(newYears);
+            AddEvent(newYears, true);
 
             var mlkDay = new HolidayEvent
             {
-                Date = new DateTime(DateTime.Now.Year, 1, 15),
+                StartDate = new DateTime(DateTime.Now.Year, 1, 15),
+                EndDate = new DateTime(DateTime.Now.Year, 1, 15),
                 RecurringFrequency = RecurringFrequencies.Custom,
                 EventText = "Martin Luther King Jr. Day",
                 CustomRecurringFunction = MlkDayHandler
             };
-            AddEvent(mlkDay);
+            AddEvent(mlkDay, true);
 
             var presidentsDay = new HolidayEvent
             {
-                Date = new DateTime(DateTime.Now.Year, 2, 15),
+                StartDate = new DateTime(DateTime.Now.Year, 2, 15),
+                EndDate = new DateTime(DateTime.Now.Year, 2, 15),
                 RecurringFrequency = RecurringFrequencies.Custom,
                 EventText = "President's Day",
                 CustomRecurringFunction = MlkDayHandler
             };
-            AddEvent(presidentsDay);
+            AddEvent(presidentsDay, true);
 
             var independanceDay = new HolidayEvent
             {
-                Date = new DateTime(DateTime.Now.Year, 7, 4),
+                StartDate = new DateTime(DateTime.Now.Year, 7, 4),
+                EndDate = new DateTime(DateTime.Now.Year, 7, 4),
                 RecurringFrequency = RecurringFrequencies.Yearly,
                 EventText = "Independence Day"
             };
-            AddEvent(independanceDay);
+            AddEvent(independanceDay, true);
 
             var laborDay = new HolidayEvent
             {
-                Date = new DateTime(DateTime.Now.Year, 9, 1),
+                StartDate = new DateTime(DateTime.Now.Year, 9, 1),
+                EndDate = new DateTime(DateTime.Now.Year, 9, 1),
                 RecurringFrequency = RecurringFrequencies.Custom,
                 EventText = "Labor Day",
                 CustomRecurringFunction = LaborDayHandler
             };
-            AddEvent(laborDay);
+            AddEvent(laborDay, true);
 
             var columbusDay = new HolidayEvent
             {
-                Date = new DateTime(DateTime.Now.Year, 10, 14),
+                StartDate = new DateTime(DateTime.Now.Year, 10, 14),
+                EndDate = new DateTime(DateTime.Now.Year, 10, 14),
                 RecurringFrequency = RecurringFrequencies.Custom,
                 EventText = "Columbus Day",
                 CustomRecurringFunction = ColumbusDayHandler
             };
-            AddEvent(columbusDay);
+            AddEvent(columbusDay, true);
 
             var veteransDay = new HolidayEvent
             {
-                Date = new DateTime(DateTime.Now.Year, 11, 11),
+                StartDate = new DateTime(DateTime.Now.Year, 11, 11),
+                EndDate = new DateTime(DateTime.Now.Year, 11, 11),
                 RecurringFrequency = RecurringFrequencies.Yearly,
                 EventText = "Veteran's Day"
             };
-            AddEvent(veteransDay);
+            AddEvent(veteransDay, true);
 
             var thanksgivingDay = new HolidayEvent
             {
-                Date = new DateTime(DateTime.Now.Year, 11, 11),
+                StartDate = new DateTime(DateTime.Now.Year, 11, 11),
+                EndDate = new DateTime(DateTime.Now.Year, 11, 11),
                 RecurringFrequency = RecurringFrequencies.Custom,
                 EventText = "Thanksgiving Day",
                 CustomRecurringFunction = ThanksgivingDayHandler
             };
-            AddEvent(thanksgivingDay);
+            AddEvent(thanksgivingDay, true);
 
             var christmas = new HolidayEvent
             {
-                Date = new DateTime(DateTime.Now.Year, 12, 25),
+                StartDate = new DateTime(DateTime.Now.Year, 12, 25),
+                EndDate = new DateTime(DateTime.Now.Year, 12, 25),
                 RecurringFrequency = RecurringFrequencies.Yearly,
                 EventText = "Christmas Day"
             };
-            AddEvent(christmas);
+            AddEvent(christmas, true);
         }
 
         [CustomRecurringFunction("Thanksgiving Day Handler", "Selects the fourth Thursday in the month")]
         private bool ThanksgivingDayHandler(IEvent evnt, DateTime dt)
         {
-            if (dt.DayOfWeek == DayOfWeek.Thursday && dt.Day > 21 && dt.Day <= 28 && dt.Month == evnt.Date.Month)
+            if (dt.DayOfWeek == DayOfWeek.Thursday && dt.Day > 21 && dt.Day <= 28 && dt.Month == evnt.StartDate.Month)
                 return true;
             return false;
         }
@@ -815,7 +928,7 @@ namespace Calendar.NET
         [CustomRecurringFunction("Columbus Day Handler", "Selects the second Monday in the month")]
         private bool ColumbusDayHandler(IEvent evnt, DateTime dt)
         {
-            if (dt.DayOfWeek == DayOfWeek.Monday && dt.Day > 7 && dt.Day <= 14 && dt.Month == evnt.Date.Month)
+            if (dt.DayOfWeek == DayOfWeek.Monday && dt.Day > 7 && dt.Day <= 14 && dt.Month == evnt.StartDate.Month)
                 return true;
             return false;
         }
@@ -823,7 +936,7 @@ namespace Calendar.NET
         [CustomRecurringFunction("Labor Day Handler", "Selects the first Monday in the month")]
         private bool LaborDayHandler(IEvent evnt, DateTime dt)
         {
-            if (dt.DayOfWeek == DayOfWeek.Monday && dt.Day <= 7 && dt.Month == evnt.Date.Month)
+            if (dt.DayOfWeek == DayOfWeek.Monday && dt.Day <= 7 && dt.Month == evnt.StartDate.Month)
                 return true;
             return false;
         }
@@ -831,7 +944,7 @@ namespace Calendar.NET
         [CustomRecurringFunction("Martin Luther King Jr. Day Handler", "Selects the third Monday in the month")]
         private bool MlkDayHandler(IEvent evnt, DateTime dt)
         {
-            if (dt.DayOfWeek == DayOfWeek.Monday && dt.Day > 14 && dt.Day <= 21 && dt.Month == evnt.Date.Month)
+            if (dt.DayOfWeek == DayOfWeek.Monday && dt.Day > 14 && dt.Day <= 21 && dt.Month == evnt.StartDate.Month)
                 return true;
             return false;
         }
@@ -840,7 +953,7 @@ namespace Calendar.NET
         private bool MemorialDayHandler(IEvent evnt, DateTime dt)
         {
             DateTime dt2 = LastDayOfWeekInMonth(dt, DayOfWeek.Monday);
-            if (dt.Month == evnt.Date.Month && dt2.Day == dt.Date.Day)
+            if (dt.Month == evnt.StartDate.Month && dt2.Day == dt.Date.Day)
                 return true;
 
             return false;
@@ -867,17 +980,14 @@ namespace Calendar.NET
 
         public bool DayForward(IEvent evnt, DateTime day)
         {
-            if (evnt.ThisDayForwardOnly)
+            if (evnt.ThisDayForwardOnly && (day <= evnt.EndDate || evnt.RecurringFrequency == RecurringFrequencies.Yearly || day.ToShortDateString() == evnt.EndDate.ToShortDateString()))
             {
-                int c = DateTime.Compare(day, evnt.Date);
+                int c = DateTime.Compare(day, evnt.StartDate);
 
                 if (c >= 0)
                     return true;
-
-                return false;
             }
-
-            return true;
+            return false;
         }
 
         internal Bitmap RequestImage()
@@ -909,7 +1019,7 @@ namespace Calendar.NET
 
             dt = new DateTime(_calendarDate.Year, _calendarDate.Month, _calendarDate.Day, 23, 59, 0);
 
-            List<IEvent> evnts = _events.Where(evnt => NeedsRendering(evnt, dt)).ToList().OrderBy(d => d.Date).ToList();
+            List<IEvent> evnts = _events.Where(evnt => NeedsRendering(evnt, dt)).ToList().OrderBy(d => d.StartDate).ToList();
 
             xStart = cellHourWidth + 1;
             yStart = 0;
@@ -924,9 +1034,9 @@ namespace Calendar.NET
                 {
                     TimeSpan ts = TimeSpan.FromHours(evnt.EventLengthInHours);
 
-                    if (evnt.Date.Ticks >= dt.Ticks && evnt.Date.Ticks < dt.Add(ts).Ticks && evnt.EventLengthInHours > 0 && i >= evnt.Date.Hour)
+                    if (evnt.StartDate.Ticks >= dt.Ticks && evnt.StartDate.Ticks < dt.Add(ts).Ticks && evnt.EventLengthInHours > 0 && i >= evnt.StartDate.Hour)
                     {
-                        int divisor = evnt.Date.Minute == 0 ? 1 : 60 / evnt.Date.Minute;
+                        int divisor = evnt.StartDate.Minute == 0 ? 1 : 60 / evnt.StartDate.Minute;
                         Color clr = Color.FromArgb(175, evnt.EventColor.R, evnt.EventColor.G, evnt.EventColor.B);
                         g.FillRectangle(new SolidBrush(GetFinalBackColor()), xStart, yStart + cellHourHeight / divisor + 1, ClientSize.Width - MarginSize * 2 - cellHourWidth - 3, cellHourHeight * ts.Hours - 1);
                         g.FillRectangle(new SolidBrush(clr), xStart, yStart + cellHourHeight / divisor + 1, ClientSize.Width - MarginSize * 2 - cellHourWidth - 3, cellHourHeight * ts.Hours - 1);
@@ -1201,7 +1311,7 @@ namespace Calendar.NET
             if (!evnt.Enabled && !_showDisabledEvents)
                 return false;
 
-            DayOfWeek dw = evnt.Date.DayOfWeek;
+            DayOfWeek dw = evnt.StartDate.DayOfWeek;
 
             if (evnt.RecurringFrequency == RecurringFrequencies.Daily)
             {
@@ -1225,10 +1335,10 @@ namespace Calendar.NET
             if (evnt.RecurringFrequency == RecurringFrequencies.EveryWeekday && (day.DayOfWeek != DayOfWeek.Sunday &&
                 day.DayOfWeek != DayOfWeek.Saturday))
                 return DayForward(evnt, day);
-            if (evnt.RecurringFrequency == RecurringFrequencies.Yearly && evnt.Date.Month == day.Month &&
-                evnt.Date.Day == day.Day)
+            if (evnt.RecurringFrequency == RecurringFrequencies.Yearly && evnt.StartDate.Month == day.Month &&
+                evnt.StartDate.Day == day.Day)
                 return DayForward(evnt, day);
-            if (evnt.RecurringFrequency == RecurringFrequencies.Monthly && evnt.Date.Day == day.Day)
+            if (evnt.RecurringFrequency == RecurringFrequencies.Monthly && evnt.StartDate.Day == day.Day)
                 return DayForward(evnt, day);
             if (evnt.RecurringFrequency == RecurringFrequencies.Custom && evnt.CustomRecurringFunction != null)
             {
@@ -1237,8 +1347,8 @@ namespace Calendar.NET
                 return false;
             }
 
-            if (evnt.RecurringFrequency == RecurringFrequencies.None && evnt.Date.Year == day.Year &&
-                evnt.Date.Month == day.Month && evnt.Date.Day == day.Day)
+            if (evnt.RecurringFrequency == RecurringFrequencies.None && evnt.StartDate.Year == day.Year &&
+                evnt.StartDate.Month == day.Month && evnt.StartDate.Day == day.Day)
                 return DayForward(evnt, day);
             return false;
         }
@@ -1269,7 +1379,7 @@ namespace Calendar.NET
             EventDetails newdetail = new EventDetails(this);
             if (newdetail.ShowDialog() == DialogResult.OK)
             {
-                MessageBox.Show("OK");
+                AddEvent(newdetail.NewEvent, false);
             }
         }
 

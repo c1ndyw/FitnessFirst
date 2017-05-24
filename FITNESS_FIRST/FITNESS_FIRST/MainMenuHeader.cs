@@ -54,7 +54,7 @@ namespace FitnessFirst
             foodButton.Text = "";
             foodButton.Name = "food";
             foodButton.Cursor = Cursors.Hand;
-            foodButton.BackgroundImage = FitnessFirst.Properties.Resources.musicon;
+            foodButton.BackgroundImage = FitnessFirst.Properties.Resources.foodicon;
             musicbutton.Text = "";
             musicbutton.Name = "music";
             musicbutton.Cursor = Cursors.Hand;
@@ -103,7 +103,7 @@ namespace FitnessFirst
                 _buttons[_buttons.Length - i - 1].FlatStyle = FlatStyle.Flat;
                 _buttons[_buttons.Length - i - 1].FlatAppearance.BorderSize = 0;
             }
-            time.Location = new Point(this.Width / 2 - 140, 10);
+            time.Location = new Point(this.Width / 2 - 240, 10);
         }
 
         private void HomeBtn_Click(object sender, EventArgs e)
@@ -168,26 +168,31 @@ namespace FitnessFirst
             count--;
             if (count < 0)
             {
-                foreach (IEvent evt in events)
+                try
                 {
-                    if (DateTime.Today.Date.DayOfYear >= evt.StartDate.DayOfYear && DateTime.Today.Date.DayOfYear <= evt.EndDate.DayOfYear)
+                    foreach (IEvent evt in events)
                     {
-                        if (DateTime.Today.Year >= evt.StartDate.Year && DateTime.Today.Year <= evt.EndDate.Year)
+                        if (DateTime.Today.Date.DayOfYear >= evt.StartDate.DayOfYear && DateTime.Today.Date.DayOfYear <= evt.EndDate.DayOfYear)
                         {
-                            if (DateTime.Now.ToShortTimeString() == evt.StartDate.ToShortTimeString() && evt.Alert == 1)
+                            if (DateTime.Today.Year >= evt.StartDate.Year && DateTime.Today.Year <= evt.EndDate.Year)
                             {
-                                foreach (DayOfWeek d in evt.Days)
+                                if (DateTime.Now.ToShortTimeString() == evt.StartDate.ToShortTimeString() && evt.Alert == 1)
                                 {
-                                    if (DateTime.Today.DayOfWeek == d)
+                                    foreach (DayOfWeek d in evt.Days)
                                     {
-                                        evt.Alert = 0;
-                                        SoundPlayer s = new SoundPlayer(Properties.Resources.alert);
-                                        if (alert)
+                                        if (DateTime.Today.DayOfWeek == d)
                                         {
-                                            s.Play();
-                                            if (MessageBox.Show("Your event: " + evt.EventText + " has been started !", "Reminder", MessageBoxButtons.OK, MessageBoxIcon.Exclamation) == DialogResult.OK)
+                                            evt.Alert = 0;
+                                            SoundPlayer s = new SoundPlayer(Properties.Resources.alert);
+                                            if (alert)
                                             {
-                                                s.Stop();
+                                                s.Play();
+                                                if (MessageBox.Show("Your event: " + evt.EventText + " has been started !", "Reminder", MessageBoxButtons.OK, MessageBoxIcon.Exclamation) == DialogResult.OK)
+                                                {
+                                                    s.Stop();
+                                                    Window w = (Window)Parent.Parent;
+                                                    w.PlyMusic();
+                                                }
                                             }
                                         }
                                     }
@@ -195,6 +200,10 @@ namespace FitnessFirst
                             }
                         }
                     }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex);
                 }
                 count = checkInterval;
             }
@@ -207,7 +216,7 @@ namespace FitnessFirst
             string eventstext = "Your event for today: ";
             foreach (IEvent evt in events)
             {
-                if (DateTime.Now >= evt.StartDate && DateTime.Now <= evt.EndDate)
+                if ((DateTime.Now >= evt.StartDate || DateTime.Now.ToShortDateString() == evt.StartDate.ToShortDateString()) && DateTime.Now <= evt.EndDate)
                 {
                     foreach (DayOfWeek d in evt.Days)
                     {

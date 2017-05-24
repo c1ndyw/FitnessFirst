@@ -15,9 +15,10 @@ namespace UnitTests
         public void ResizeTest()
         {
             CalendarPage cp = new CalendarPage();
+            cp.Size = new Size(400, 400);
             cp.ReSize();
-            Assert.AreEqual(cp.Calendar.Location, new Point(10, 10));
-            Assert.AreEqual(cp.Calendar.Size, new Size(cp.Width - 20, cp.Height - 50));
+            Assert.AreEqual(cp.Calendar.Location, new Point(10, 110));
+            Assert.AreEqual(cp.Calendar.Size, new Size(cp.Width - 50, cp.Height - 150));
         }
 
         [TestMethod]
@@ -34,13 +35,15 @@ namespace UnitTests
             c.GetEvents().Clear();
             var exerciseEvent = new CustomEvent
             {
-                Date = DateTime.Now,
+                StartDate = DateTime.Now,
+                EndDate = DateTime.Now,
                 RecurringFrequency = RecurringFrequencies.Monthly,
                 EventLengthInHours = 1,
+                Alert = 1,
                 EventText = "event1",
                 EventFont = new Font(FontFamily.GenericSansSerif, 12.0f, FontStyle.Regular)
             };
-            c.AddEvent(exerciseEvent);
+            c.AddEvent(exerciseEvent, false);
             Assert.AreEqual(c.GetEvents().Count, 1);
         }
 
@@ -51,13 +54,15 @@ namespace UnitTests
             c.GetEvents().Clear();
             var exerciseEvent = new CustomEvent
             {
-                Date = DateTime.Now,
+                StartDate = DateTime.Now,
+                EndDate = DateTime.Now,
                 RecurringFrequency = RecurringFrequencies.Monthly,
                 EventLengthInHours = 1,
+                Alert = 1,
                 EventText = "event1",
                 EventFont = new Font(FontFamily.GenericSansSerif, 12.0f, FontStyle.Regular)
             };
-            c.AddEvent(exerciseEvent);
+            c.AddEvent(exerciseEvent, false);
             c.RemoveEvent(exerciseEvent);
             Assert.AreEqual(c.GetEvents().Count, 0);
         }
@@ -95,13 +100,15 @@ namespace UnitTests
             c.GetEvents().Clear();
             var exerciseEvent = new CustomEvent
             {
-                Date = DateTime.Now,
+                StartDate = DateTime.Now,
+                EndDate = DateTime.Now,
                 RecurringFrequency = RecurringFrequencies.Monthly,
                 EventLengthInHours = 1,
+                Alert = 1,
                 EventText = "event1",
                 EventFont = new Font(FontFamily.GenericSansSerif, 12.0f, FontStyle.Regular)
             };
-            c.AddEvent(exerciseEvent);
+            c.AddEvent(exerciseEvent, false);
             bool recurring = c.DayForward(exerciseEvent, DateTime.Now);
             Assert.IsTrue(recurring);
         }
@@ -130,13 +137,15 @@ namespace UnitTests
             c.GetEvents().Clear();
             var exerciseEvent = new CustomEvent
             {
-                Date = DateTime.Now,
+                StartDate = DateTime.Now,
+                EndDate = DateTime.Now,
                 RecurringFrequency = RecurringFrequencies.Monthly,
                 EventLengthInHours = 1,
+                Alert = 1,
                 EventText = "event1",
                 EventFont = new Font(FontFamily.GenericSansSerif, 12.0f, FontStyle.Regular)
             };
-            c.AddEvent(exerciseEvent);
+            c.AddEvent(exerciseEvent, false);
             Assert.AreEqual(c.GetEvents()[0].EventText, "event1");
         }
     }
