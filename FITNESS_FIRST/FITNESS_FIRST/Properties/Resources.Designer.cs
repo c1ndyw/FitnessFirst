@@ -270,6 +270,16 @@ namespace FitnessFirst.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap foodicon {
+            get {
+                object obj = ResourceManager.GetObject("foodicon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Gold {
             get {
                 object obj = ResourceManager.GetObject("Gold", resourceCulture);
