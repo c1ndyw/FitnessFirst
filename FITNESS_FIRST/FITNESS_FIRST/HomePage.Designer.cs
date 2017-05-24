@@ -30,7 +30,6 @@
         {
             this.sportContainer = new System.Windows.Forms.Panel();
             this.startBtn = new System.Windows.Forms.PictureBox();
-            this.courseTableAdapter1 = new FitnessFirst.FitnessfirstDataSetTableAdapters.CourseTableAdapter();
             ((System.ComponentModel.ISupportInitialize)(this.startBtn)).BeginInit();
             this.SuspendLayout();
             // 
@@ -50,10 +49,6 @@
             this.startBtn.TabIndex = 8;
             this.startBtn.TabStop = false;
             // 
-            // courseTableAdapter1
-            // 
-            this.courseTableAdapter1.ClearBeforeFill = true;
-            // 
             // HomePage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -72,6 +67,5 @@
 
         private System.Windows.Forms.Panel sportContainer;
         private System.Windows.Forms.PictureBox startBtn;
-        private FitnessfirstDataSetTableAdapters.CourseTableAdapter courseTableAdapter1;
     }
 }

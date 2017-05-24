@@ -1,4 +1,4 @@
-﻿namespace WindowsFormsApplication1
+﻿namespace FitnessFirst
 {
     partial class MainPage
     {
@@ -35,13 +35,13 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Name = "MainPage";
-            this.Size = new System.Drawing.Size(752, 505);
-            this.Load += new System.EventHandler(this.MainPage_Load);
+            this.Size = new System.Drawing.Size(240, 169);
             this.ResumeLayout(false);
 
         }
 
         #endregion
+
 
     }
 }

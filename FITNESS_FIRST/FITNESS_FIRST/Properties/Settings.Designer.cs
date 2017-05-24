@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace WindowsFormsApplication1.Properties {
+namespace FitnessFirst.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
@@ -31,6 +31,19 @@ namespace WindowsFormsApplication1.Properties {
         public string FitnessfirstConnectionString {
             get {
                 return ((string)(this["FitnessfirstConnectionString"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=(LocalDB)\\v11.0;Initial Catalog=E:\\SOFTWARESFILES\\VISUALSTUDIO\\FITNES" +
+            "S_FIRST\\FITNESS_FIRST\\FITNESSFIRST.MDF;Integrated Security=True;Connect Timeout=" +
+            "30")]
+        public string E__SOFTWARESFILES_VISUALSTUDIO_FITNESS_FIRST_FITNESS_FIRST_FITNESSFIRST_MDFConnectionString {
+            get {
+                return ((string)(this["E__SOFTWARESFILES_VISUALSTUDIO_FITNESS_FIRST_FITNESS_FIRST_FITNESSFIRST_MDFConnec" +
+                    "tionString"]));
             }
         }
     }
