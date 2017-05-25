@@ -20,7 +20,6 @@ namespace FitnessFirst
         Label instruction = new Label();
         ToolTip hint = new ToolTip();
 
-
         int timer = 0;
 
         // for timer
@@ -32,10 +31,9 @@ namespace FitnessFirst
         //for animation
         Bitmap animationImage;
         bool currentlyAnimating = false;
-
-        //for unitest
         string state = "";
 
+        //for get the right exercise 
         Sports _exerciseName;
         public Sports ExerciseName { get { return _exerciseName; } set { _exerciseName = value; } }
         public string State { get { return state; } set { state = value; } }
@@ -43,13 +41,10 @@ namespace FitnessFirst
 
         public Sports CurrentSport { get; set; }
 
-        public Button PauseClock { get {return _pauseclock}; set {_pauseclock = value}; }
-        public Button StartClock { get {return _startclock}; set {_startclock = value}; }
+        public Button PauseClock { get { return _pauseclock; } set { _pauseclock = value; } }
+        public Button StartClock { get { return _startclock; } set { _startclock = value; } }
         public bool IsStrClkShow = true;
         public bool ISPauClkShow = true;
-
-       
-
 
         public ExercisePage()
         {
@@ -73,9 +68,8 @@ namespace FitnessFirst
             StartClock.Click += new EventHandler(StartTime);
             IsStrClkShow = true;
 
-            PauseClock.BackgroundImage = FitnessFirst.Properties.Resources.Running;
+            PauseClock.BackgroundImage = FitnessFirst.Properties.Resources.start2;
             ISPauClkShow = false;
-
             timerLabel.Click += new EventHandler(PauseTime);
         }
 
@@ -203,7 +197,6 @@ namespace FitnessFirst
 
             timer1.Start();
             timerLabel.Text = Timer.ToString();
-
             state = "start";
         }
 
@@ -217,11 +210,11 @@ namespace FitnessFirst
         {
             State = "pause";
             timer1.Stop();
-            StartClock.Show();
-            IsStrClkShow = true;
-
             PauseClock.Hide();
             ISPauClkShow = false;
+
+            StartClock.Show();
+            IsStrClkShow = true;
             ImageAnimator.StopAnimate(animationImage, new EventHandler(OnFrameChanged));
             Invalidate();
         }
@@ -238,13 +231,13 @@ namespace FitnessFirst
 
             if (Timer <= -1)
             {
-                State = "stop";
                 timer1.Stop();
                 ImageAnimator.StopAnimate(animationImage, new EventHandler(OnFrameChanged));
                 MessageBox.Show("Time up!");
+                State = "stop";
                 Global.AddExerciseCount();
-                 if (Global.DefaultAchievements.Count > 0)
--                    Global.SynchronizeAchievement();
+                if (Global.DefaultAchievements.Count > 0)
+                    Global.SynchronizeAchievement();
                 Reset();
             }
             else
@@ -252,7 +245,6 @@ namespace FitnessFirst
                 timerLabel.Text = Timer.ToString();
             }
         }
-
 
         //For unit test
         public void TestTimerTick()
