@@ -193,8 +193,8 @@ namespace FoodUnitTest
             {
                 Console.WriteLine(e);
             }
-            Assert.AreEqual(foodPage.Title.Location, new Size(100, 20));
-            Assert.AreEqual(foodPage.Desc.Location, new Size(100, 55));
+            Assert.AreEqual(foodPage.Title.Location, new Point(100, 20));
+            Assert.AreEqual(foodPage.Desc.Location, new Point(100, 55));
         }
 
         [TestMethod]
@@ -228,7 +228,6 @@ namespace FoodUnitTest
                 _foodBtn.Location = new Point(0, 0);
                 _foodBtn.Width = buttonSize - 2;
                 _foodBtn.Height = buttonSize - 2;
-                _foodBtn.BackColor = Color.Transparent;
                 _foodBtn.Visible = true;
                 _foodBtn.Picture.Location = new Point(5, 5);
                 _foodBtn.Picture.Width = _foodBtn.Width - 10;
@@ -258,8 +257,8 @@ namespace FoodUnitTest
                 result = Results.Failed;
             }
             Assert.AreEqual(_foodBtn.Name, "food1");
-            Assert.AreEqual(_foodBtn.Title, "title");
-            Assert.AreEqual(_foodBtn.Desc, "desc");
+            Assert.AreEqual(_foodBtn.Title.Text, "title");
+            Assert.AreEqual(_foodBtn.Desc.Text, "desc");
             Assert.AreEqual(result, Results.Success);
         }
 
@@ -268,8 +267,8 @@ namespace FoodUnitTest
         {
             Global.SetDefaultFoods();
             FoodPage foodPage = new FoodPage();
-            List<FoodBox> _foodBtn = new List<FoodBox>();
             Panel foodContainer = new Panel();
+            List<AchievementBox> _foodBtn = new List<AchievementBox>();
             Results result = Results.Failed;
             try
             {
@@ -278,33 +277,32 @@ namespace FoodUnitTest
                 int row = 0, col = 0;
                 for (int i = 0; i < Global.DefaultFoods.Count; i++)
                 {
-                    _foodBtn.Add(new FoodBox());
+                    _foodBtn.Add(new AchievementBox());
                     _foodBtn[i].Name = Global.DefaultFoods[i].title;
                     _foodBtn[i].Location = new Point(col * buttonSize + 1 + foodContainer.Width / 2 - buttonSize * 2, row * buttonSize + 1);
                     _foodBtn[i].Width = buttonSize - 2;
                     _foodBtn[i].Height = buttonSize - 2;
-                    _foodBtn[i].BackColor = Color.Transparent;
                     _foodBtn[i].Visible = true;
-                    _foodBtn[i].Picture.Location = new Point(5, 5);
-                    _foodBtn[i].Picture.Width = _foodBtn[i].Width - 10;
-                    _foodBtn[i].Picture.Height = _foodBtn[i].Height - 90;
-                    _foodBtn[i].Picture.BackgroundImage = null;
-                    _foodBtn[i].Picture.BackgroundImageLayout = ImageLayout.Zoom;
-                    _foodBtn[i].Picture.Cursor = Cursors.Hand;
-                    _foodBtn[i].Title.Text = Global.DefaultFoods[i].title;
-                    _foodBtn[i].Title.Location = new Point(5, _foodBtn[i].Picture.Height + 10);
-                    _foodBtn[i].Title.Width = _foodBtn[i].Width - 5;
-                    _foodBtn[i].Title.Height = 30;
-                    _foodBtn[i].Title.Font = new System.Drawing.Font("Arial", 14);
-                    _foodBtn[i].Title.TextAlign = ContentAlignment.MiddleCenter;
-                    _foodBtn[i].Title.ForeColor = Color.DarkRed;
-                    _foodBtn[i].Desc.Text = Global.DefaultFoods[i].desc;
-                    _foodBtn[i].Desc.Location = new Point(5, _foodBtn[i].Picture.Height + 40);
-                    _foodBtn[i].Desc.Width = _foodBtn[i].Width;
-                    _foodBtn[i].Desc.Height = 50;
-                    _foodBtn[i].Desc.Font = new System.Drawing.Font("Arial", 14);
-                    _foodBtn[i].Desc.TextAlign = ContentAlignment.MiddleCenter;
-                    _foodBtn[i].Desc.ForeColor = Color.IndianRed;
+                    _foodBtn[i].Images().Location = new Point(5, 5);
+                    _foodBtn[i].Images().Width = _foodBtn[i].Width - 10;
+                    _foodBtn[i].Images().Height = _foodBtn[i].Height - 90;
+                    _foodBtn[i].Images().BackgroundImage = null;
+                    _foodBtn[i].Images().BackgroundImageLayout = ImageLayout.Zoom;
+                    _foodBtn[i].Images().Cursor = Cursors.Hand;
+                    _foodBtn[i].Title().Text = Global.DefaultFoods[i].title;
+                    _foodBtn[i].Title().Location = new Point(5, _foodBtn[i].Images().Height + 10);
+                    _foodBtn[i].Title().Width = _foodBtn[i].Width - 5;
+                    _foodBtn[i].Title().Height = 30;
+                    _foodBtn[i].Title().Font = new System.Drawing.Font("Arial", 14);
+                    _foodBtn[i].Title().TextAlign = ContentAlignment.MiddleCenter;
+                    _foodBtn[i].Title().ForeColor = Color.DarkRed;
+                    _foodBtn[i].Desc().Text = Global.DefaultFoods[i].desc;
+                    _foodBtn[i].Desc().Location = new Point(5, _foodBtn[i].Images().Height + 40);
+                    _foodBtn[i].Desc().Width = _foodBtn[i].Width;
+                    _foodBtn[i].Desc().Height = 50;
+                    _foodBtn[i].Desc().Font = new System.Drawing.Font("Arial", 14);
+                    _foodBtn[i].Desc().TextAlign = ContentAlignment.MiddleCenter;
+                    _foodBtn[i].Desc().ForeColor = Color.IndianRed;
                     col++;
                     if (col >= 4)
                     {
@@ -312,15 +310,15 @@ namespace FoodUnitTest
                         row++;
                     }
                     foodContainer.Controls.Add(_foodBtn[i]);
-                    result = Results.Success;
                 }
+                result = Results.Success;
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
                 result = Results.Failed;
             }
-            Assert.AreEqual(_foodBtn[0].Name, Global.DefaultFoods[0].title);
+            Assert.AreEqual(_foodBtn[0].Title().Text, Global.DefaultFoods[0].title);
             Assert.AreEqual(result, Results.Success);
         }
     }
