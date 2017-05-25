@@ -20,6 +20,7 @@ namespace FitnessFirst
         Label instruction = new Label();
         ToolTip hint = new ToolTip();
 
+
         int timer = 0;
 
         // for timer
@@ -31,9 +32,10 @@ namespace FitnessFirst
         //for animation
         Bitmap animationImage;
         bool currentlyAnimating = false;
-        string state = null;
 
-        //for get the right exercise 
+        //for unitest
+        string state = "";
+
         Sports _exerciseName;
         public Sports ExerciseName { get { return _exerciseName; } set { _exerciseName = value; } }
         public string State { get { return state; } set { state = value; } }
@@ -41,10 +43,13 @@ namespace FitnessFirst
 
         public Sports CurrentSport { get; set; }
 
-        public Button PauseClock { get { return _pauseclock; } set { _pauseclock = value; } }
-        public Button StartClock { get { return _startclock; } set { _startclock = value; } }
+        public Button PauseClock { get => _pauseclock; set => _pauseclock = value; }
+        public Button StartClock { get => _startclock; set => _startclock = value; }
         public bool IsStrClkShow = true;
         public bool ISPauClkShow = true;
+
+       
+
 
         public ExercisePage()
         {
@@ -64,9 +69,13 @@ namespace FitnessFirst
 
             ImageAnimator.StopAnimate(animationImage, new EventHandler(OnFrameChanged));
             StartClock.BackgroundImage = FitnessFirst.Properties.Resources.startclock;
+
             StartClock.Click += new EventHandler(StartTime);
+            IsStrClkShow = true;
 
             PauseClock.BackgroundImage = FitnessFirst.Properties.Resources.Running;
+            ISPauClkShow = false;
+
             timerLabel.Click += new EventHandler(PauseTime);
         }
 
@@ -100,7 +109,11 @@ namespace FitnessFirst
         public void Reset()
         {
             StartClock.Show();
+            IsStrClkShow = true;
+
             PauseClock.Hide();
+            ISPauClkShow = false;
+
             timer1.Stop();
             Timer = Global.exerciseTime;
         }
@@ -182,11 +195,16 @@ namespace FitnessFirst
             ImageAnimator.Animate(animationImage, new EventHandler(this.OnFrameChanged));
 
             StartClock.Hide();
+            IsStrClkShow = false;
+
             PauseClock.Show();
+            ISPauClkShow = true;
             Invalidate();
 
             timer1.Start();
             timerLabel.Text = Timer.ToString();
+
+            state = "start";
         }
 
         //Pause the aniamation and time
@@ -197,9 +215,13 @@ namespace FitnessFirst
 
         public void Pause()
         {
+            State = "pause";
             timer1.Stop();
-            PauseClock.Hide();
             StartClock.Show();
+            IsStrClkShow = true;
+
+            PauseClock.Hide();
+            ISPauClkShow = false;
             ImageAnimator.StopAnimate(animationImage, new EventHandler(OnFrameChanged));
             Invalidate();
         }
@@ -216,15 +238,13 @@ namespace FitnessFirst
 
             if (Timer <= -1)
             {
+                State = "stop";
                 timer1.Stop();
                 ImageAnimator.StopAnimate(animationImage, new EventHandler(OnFrameChanged));
                 MessageBox.Show("Time up!");
-                StartClock.Show();
-                PauseClock.Hide();
-                State = "stop";
                 Global.AddExerciseCount();
-                if (Global.DefaultAchievements.Count > 0)
-                    Global.SynchronizeAchievement();
+                //set these below become comment is for testing
+                //Global.SynchronizeAchievement();
                 Reset();
             }
             else
@@ -232,6 +252,7 @@ namespace FitnessFirst
                 timerLabel.Text = Timer.ToString();
             }
         }
+
 
         //For unit test
         public void TestTimerTick()
@@ -250,19 +271,5 @@ namespace FitnessFirst
             timer1_Tick(sender, e);
             Pause();
         }
-
-        //Another way to solve this problem
-        //private static bool IsAnimating(PictureBox box)
-        //{
-        //    var fi = box.GetType().GetField("currentlyAnimating",
-        //        BindingFlags.NonPublic | BindingFlags.Instance);
-        //    return (bool)fi.GetValue(box);
-        //}
-        //private static void Animate(PictureBox box, bool enable)
-        //{
-        //    var anim = box.GetType().GetMethod("Animate",
-        //        BindingFlags.NonPublic | BindingFlags.Instance, null, new Type[] { typeof(bool) }, null);
-        //    anim.Invoke(box, new object[] { enable });
-        //}
     }
 }
