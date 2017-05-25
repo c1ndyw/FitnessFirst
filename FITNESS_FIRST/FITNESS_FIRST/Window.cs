@@ -28,15 +28,15 @@ namespace FitnessFirst
         public Window()
         {
             InitializeComponent();
-        }
-
-        private void Window_Load(object sender, EventArgs e)
-        {
             Initialization();
             Controls.Add(LoadingWindow);
             //Global.WaitSomeTime(2000);
             Controls.RemoveAt(0);
             Controls.Add(LoginPage);
+        }
+
+        private void Window_Load(object sender, EventArgs e)
+        {
         }
 
         public bool PlyMusic()
@@ -141,8 +141,9 @@ namespace FitnessFirst
                     if (MainPage.ChangePage(page) == Results.Failed)
                     {
                         MessageBox.Show("Page is not developed yet", "Page doesn't exist", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return Results.Failed;
                     }
-                    return Results.Failed;
+                    break;
             }
             return Results.Success;
         }
