@@ -31,7 +31,7 @@ namespace FitnessFirst
         //for animation
         Bitmap animationImage;
         bool currentlyAnimating = false;
-        string state = null;
+        string state = "";
 
         //for get the right exercise 
         Sports _exerciseName;
@@ -64,9 +64,12 @@ namespace FitnessFirst
 
             ImageAnimator.StopAnimate(animationImage, new EventHandler(OnFrameChanged));
             StartClock.BackgroundImage = FitnessFirst.Properties.Resources.startclock;
-            StartClock.Click += new EventHandler(StartTime);
 
-            PauseClock.BackgroundImage = FitnessFirst.Properties.Resources.Running;
+            StartClock.Click += new EventHandler(StartTime);
+            IsStrClkShow = true;
+
+            PauseClock.BackgroundImage = FitnessFirst.Properties.Resources.start2;
+            ISPauClkShow = false;
             timerLabel.Click += new EventHandler(PauseTime);
         }
 
@@ -100,7 +103,11 @@ namespace FitnessFirst
         public void Reset()
         {
             StartClock.Show();
+            IsStrClkShow = true;
+
             PauseClock.Hide();
+            ISPauClkShow = false;
+
             timer1.Stop();
             Timer = Global.exerciseTime;
         }
@@ -182,11 +189,15 @@ namespace FitnessFirst
             ImageAnimator.Animate(animationImage, new EventHandler(this.OnFrameChanged));
 
             StartClock.Hide();
+            IsStrClkShow = false;
+
             PauseClock.Show();
+            ISPauClkShow = true;
             Invalidate();
 
             timer1.Start();
             timerLabel.Text = Timer.ToString();
+            state = "start";
         }
 
         //Pause the aniamation and time
@@ -197,9 +208,13 @@ namespace FitnessFirst
 
         public void Pause()
         {
+            State = "pause";
             timer1.Stop();
             PauseClock.Hide();
+            ISPauClkShow = false;
+
             StartClock.Show();
+            IsStrClkShow = true;
             ImageAnimator.StopAnimate(animationImage, new EventHandler(OnFrameChanged));
             Invalidate();
         }
@@ -219,8 +234,6 @@ namespace FitnessFirst
                 timer1.Stop();
                 ImageAnimator.StopAnimate(animationImage, new EventHandler(OnFrameChanged));
                 MessageBox.Show("Time up!");
-                StartClock.Show();
-                PauseClock.Hide();
                 State = "stop";
                 Global.AddExerciseCount();
                 if (Global.DefaultAchievements.Count > 0)
@@ -250,19 +263,5 @@ namespace FitnessFirst
             timer1_Tick(sender, e);
             Pause();
         }
-
-        //Another way to solve this problem
-        //private static bool IsAnimating(PictureBox box)
-        //{
-        //    var fi = box.GetType().GetField("currentlyAnimating",
-        //        BindingFlags.NonPublic | BindingFlags.Instance);
-        //    return (bool)fi.GetValue(box);
-        //}
-        //private static void Animate(PictureBox box, bool enable)
-        //{
-        //    var anim = box.GetType().GetMethod("Animate",
-        //        BindingFlags.NonPublic | BindingFlags.Instance, null, new Type[] { typeof(bool) }, null);
-        //    anim.Invoke(box, new object[] { enable });
-        //}
     }
 }
