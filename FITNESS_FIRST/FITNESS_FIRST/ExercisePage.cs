@@ -43,8 +43,8 @@ namespace FitnessFirst
 
         public Sports CurrentSport { get; set; }
 
-        public Button PauseClock { get => _pauseclock; set => _pauseclock = value; }
-        public Button StartClock { get => _startclock; set => _startclock = value; }
+        public Button PauseClock { get {return _pauseclock}; set {_pauseclock = value}; }
+        public Button StartClock { get {return _startclock}; set {_startclock = value}; }
         public bool IsStrClkShow = true;
         public bool ISPauClkShow = true;
 
@@ -243,8 +243,8 @@ namespace FitnessFirst
                 ImageAnimator.StopAnimate(animationImage, new EventHandler(OnFrameChanged));
                 MessageBox.Show("Time up!");
                 Global.AddExerciseCount();
-                //set these below become comment is for testing
-                //Global.SynchronizeAchievement();
+                 if (Global.DefaultAchievements.Count > 0)
+-                    Global.SynchronizeAchievement();
                 Reset();
             }
             else
